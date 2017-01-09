@@ -10,7 +10,7 @@ module OpenProject::ProtoPlugin
 
     register 'openproject-proto_plugin',
              :author_url => 'http://finn.de',
-             :requires_openproject => '>= 3.0.0pre13'
+             :requires_openproject => '>= 6.0.0'
 
   end
 end
