@@ -1,0 +1,21 @@
+// CSS goes here.
+// The file has to be included into the page first via
+//
+//   <%= stylesheet_link_tag 'proto_plugin/main', plugin: :openproject_proto_plugin %>
+//
+// For this example plugin the file is included into every page through the
+// :header_tags view hook (see `lib/open_project/proto_plugin/hooks.rb`).
+
+#homescreen-after-links .widget-box {
+  border-color: red;
+}
+
+#proto-plugin-block {
+  color: red;
+}
+
+.flash.kittens {
+  color: white;
+  background-color: red;
+  font-weight: bold;
+}
