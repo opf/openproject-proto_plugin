@@ -5,6 +5,41 @@ Examples of doing the most common things a plugin may want to do are included.
 
 To get started quickly you may just copy this plugin and remove the bits you don't need.
 
+## Getting started
+
+To include this plugin create a file `Gemfile.plugins` in your OpenProject directory with the following contents:
+
+```
+group :opf_plugins do
+  gem "openproject-proto_plugin", git: "git@github.com:opf/openproject-proto_plugin.git", branch: "master"
+end
+```
+
+As you may want to play around with the plugin locally you may want to check it out and use the following instead:
+
+```
+group :opf_plugins do
+  gem "openproject-proto_plugin", path: "/path/to/openproject-proto_plugin"
+end
+```
+
+If you already have a `Gemfile.plugins` just add the line "gem" line to it inside the `:opf_plugins` group.
+
+Once you've done that run:
+
+```
+bundle install && bundle exec rake assets:webpack
+```
+
+Start the server using:
+
+```
+bundle exec rails s
+```
+
+In the following sections we will explain common things you may want to use in your plugin.
+The plugin does all these things. Every section will list the relevant files you may want to look at and explain the feature. Beyond that there are also code comments in the respective files which provide further details.
+
 ## Controllers
 
 Relevant files:
