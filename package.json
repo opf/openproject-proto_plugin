@@ -1,0 +1,6 @@
+{
+  "name": "openproject-proto_plugin",
+  "version": "0.1.0",
+  "main": "frontend/app/openproject-proto_plugin-app.js",
+  "dependencies": {}
+}

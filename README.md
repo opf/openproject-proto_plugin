@@ -12,6 +12,8 @@ Relevant files:
 * `app/controllers/kittens_controller.rb`
 * `app/views/kittens/index.html.erb`
 
+Controllers work as usual in Rails applications.
+
 ## Assets
 
 Relevant files:
@@ -22,11 +24,69 @@ Relevant files:
 * `app/stylesheets/proto_plugin/main.scss`
 * `app/assets/images/kitty.png`
 
+Any assets you want to use have to be registered for pre-compilation in the engine like this:
+
+```
+assets %w(proto_plugin/main.css proto_plugin/main.js kitty.png)
+```
+
+You don't technically have to put the assets into a subfolder named after your plugin.
+But it's recommended to avoid naming conflicts. The image (`kitty.png`) is not scoped and would conflict with the core if it were to include an asset called `kitty.png` too.
+
+## Frontend
+
+Relevant files:
+
+* `package.json`
+* `frontend/app/openproject-proto_plugin-app.js`
+* `frontend/app/controllers/kittens.js`
+* `app/views/kittens/index.html.erb`
+
+If you want to work within the frontend's angular app you will need to provide a `package.json`.
+Take a look at the `frontend` folder to see an example Angular controller which is used in the "kittens" index view.
+
+Changes in the frontend require running webpack to update. For that run the following in the OpenProject folder (not the plugin):
+
+```
+npm run webpack
+```
+
 ## Menu Items
 
 Relevant files:
 
-* `lib/open_project/engine.rb` - `proto_plugin.menu_items` initializer
+* `lib/open_project/engine.rb` - register block in the beginning
+* `app/controllers/kittens_controller.rb`
+
+You can register new menu items. For instance a project menu item like this:
+
+```
+menu :project_menu,
+     :kittens,
+     { controller: '/kittens', action: 'index' },
+     after: :overview,
+     param: :project_id,
+     caption: "Kittens",
+     html: { class: 'icon2 icon-bug', id: "kittens-menu-item" },
+     if: ->(project) { true }
+end
+```
+
+You can add nested menu items by passing a `parent` option to the following items.
+For instance you could add a child menu item to the menu item shown above by adding
+`parent: :kittens` as another option.
+
+Menus:
+
+* top_menu
+* account_menu
+* application_menu
+* my_menu
+* admin_menu
+* project_menu
+
+_Note: the example menu item registered in this plugin is only visible if you enable
+the "Kittens module" in a project under "Project settings"._
 
 ## Homescreen Blocks
 
@@ -34,6 +94,61 @@ Relevant files:
 
 * `lib/open_project/engine.rb` - `proto_plugin.homescreen_blocks` initializer
 * `app/views/homescreen/blocks/_homescreen_block.html.erb`
+
+You can register additional blocks in OpenProject's homescreen like this:
+
+```
+OpenProject::Static::Homescreen.manage :blocks do |blocks|
+  blocks.push(
+    { partial: 'homescreen_block', if: Proc.new { true } }
+  )
+end
+```
+
+The `if` option being optional.
+
+## OpenProject::Notification listeners
+
+Relevant files:
+
+* `lib/open_project/engine.rb` - `proto_plugin.notifications` initializer
+
+While OpenProject inherited hooks (see next section) from Redmine it also
+employs its own mechanism for simple event callbacks. Their return values are discarded.
+
+For example, you can be notified when a user has been invited to OpenProject like this:
+
+```
+OpenProject::Notifications.subscribe 'user_invited' do |token|
+  user = token.user
+
+  Rails.logger.debug "#{user.email} invited to OpenProject"
+end
+```
+
+### Events
+
+Currently there are the following events (block parameters in parenthesis_) you can subscribe too:
+
+* user_invited (token)
+* user_reinvited (token)
+* project_updated (project)
+* project_renamed (project)
+* project_deletion_imminent (project)
+* member_updated (member)
+* member_removed (member)
+* journal_created (payload)
+* watcher_added (payload)
+
+### Setting Events
+
+For each setting an event will be triggered when it's changed. For instance:
+
+* setting.host_name.changed (value, old_value)
+
+Where `host_name` is the name of the setting. You can find out all setting names simply
+by inspecting the relevant setting input field in the admin area in your browser or
+by listing them all on the rails console through `Setting.pluck(:name)`. And then there's also `config/settings.yml` where all the default values for settings are defined under their name.
 
 ## Hooks
 

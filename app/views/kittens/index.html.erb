@@ -1,12 +1,14 @@
+<% html_title("Kittens") %>
+
 <h1>Kittens</h1>
 
 <p>
   There's these kittens:
 </p>
 
-<ul>
+<ul ng-controller="KittensController as kittens">
   <% @kittens.each do |kitten| %>
-    <li><%= kitten %></li>
+    <li ng-click="showMessage()"><%= kitten %></li>
   <% end %>
 </ul>
 
