@@ -3,7 +3,7 @@ class KittensController < ApplicationController
   before_filter :find_optional_project, only: :index
 
   def index
-    @kittens = ['Felix', 'Klaus', 'Herbert']
+    @kittens = %w(Felix Klaus Herbert)
 
     render layout: true
   end
