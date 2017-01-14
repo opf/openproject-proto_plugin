@@ -136,7 +136,7 @@ Menus:
 
 _Note: the example menu item registered in this plugin is only visible if you enable the "Kittens module" in a project under "Project settings"._
 
-![](images/kittens-enable-module.png?raw=true | width=600)
+![](images/enable-kittens-module.png?raw=true | width=600)
 
 
 ## Homescreen Blocks
