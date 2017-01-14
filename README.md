@@ -15,7 +15,7 @@ In order to be able to continue, you will first have to have the following items
 
 We are assuming that you understand how to develop Ruby on Rails applications and are familiar with controllers, views, asset management, hooks and engines.
 
-The frontend can be written using plain-vanilla JavaScript, but if you choose to integrate with the OpenProject frontend then you will have to understand the AngularJS framework.
+The frontend can be written using plain-vanilla JavaScript, but if you choose to integrate directly with the OpenProject frontend then you will have to understand the AngularJS framework.
 
 
 ## Getting started
@@ -136,52 +136,55 @@ Menus:
 
 _Note: the example menu item registered in this plugin is only visible if you enable the "Kittens module" in a project under "Project settings"._
 
-![](images/enable-kittens-module.png?raw=true | width=600)
+![](images/enable-kittens-module.png?raw=true | width=400)
 
 
 ## Homescreen Blocks
 
 The relevant files for homescreen blocks are:
 
-* `lib/open_project/engine.rb` - `proto_plugin.homescreen_blocks` initializer
+* `lib/open_project/proto_plugin/engine.rb` - `proto_plugin.homescreen_blocks` initializer
 * `app/views/homescreen/blocks/_homescreen_block.html.erb`
 
-You can register additional blocks in OpenProject's homescreen like this:
+You can register additional blocks in OpenProject's homescreen in the file `engine.rb` like this:
 
 ```
-OpenProject::Static::Homescreen.manage :blocks do |blocks|
-  blocks.push(
-    { partial: 'homescreen_block', if: Proc.new { true } }
-  )
+initializer 'proto_plugin.homescreen_blocks' do
+  OpenProject::Static::Homescreen.manage :blocks do |blocks|
+    blocks.push(
+      { partial: 'homescreen_block', if: Proc.new { true } }
+    )
+  end
 end
 ```
 
-The `if` option being optional.
+Where the `if` option is optional.
 
 
 ## OpenProject::Notification listeners
 
-Relevant files:
+The relevant files for notification listeners are:
 
-* `lib/open_project/engine.rb` - `proto_plugin.notifications` initializer
+* `lib/open_project/proto_plugin/engine.rb` - `proto_plugin.notifications` initializer
 
-While OpenProject inherited hooks (see next section) from Redmine it also
-employs its own mechanism for simple event callbacks. Their return values are discarded.
+Although OpenProject has inherited hooks (see next section) from Redmine, it also employs its own mechanism for simple event callbacks. Their return values are ignored.
 
-For example, you can be notified when a user has been invited to OpenProject like this:
+For example, you can be notified whenever a user has been invited to OpenProject by subscribing to the `user_invited` event. Add the following to the `engine.rb` file:
 
 ```
-OpenProject::Notifications.subscribe 'user_invited' do |token|
-  user = token.user
+initializer 'proto_plugin.notifications' do
+  OpenProject::Notifications.subscribe 'user_invited' do |token|
+    user = token.user
 
-  Rails.logger.debug "#{user.email} invited to OpenProject"
+    Rails.logger.debug "#{user.email} invited to OpenProject"
+  end
 end
 ```
 
 
 ### Events
 
-Currently there are the following events (block parameters in parenthesis_) you can subscribe too:
+Currently the supported events (_block parameters in parenthesis_) to which you can subscribe are:
 
 * user_invited (token)
 * user_reinvited (token)
@@ -196,39 +199,33 @@ Currently there are the following events (block parameters in parenthesis_) you 
 
 ### Setting Events
 
-For each setting an event will be triggered when it's changed. For instance:
+Whenever a given setting changes, an event is triggered passing the previous and new values. For instance:
 
-* setting.host_name.changed (value, old_value)
+* `setting.host_name.changed` (value, old_value)
 
-Where `host_name` is the name of the setting. You can find out all setting names simply
-by inspecting the relevant setting input field in the admin area in your browser or
-by listing them all on the rails console through `Setting.pluck(:name)`. And then there's also `config/settings.yml` where all the default values for settings are defined under their name.
+Where `host_name` is the name of the setting. You can find out all setting names simply by inspecting the relevant setting input field in the admin area in your browser or by listing them all on the rails console through `Setting.pluck(:name)`. Also have a look at `config/settings.yml` where all the default values for settings are defined by their name.
 
 
 ## Hooks
 
-Relevant files:
+The relevant files for hooks are:
 
 * `lib/open_project/engine.rb` - `proto_plugin.register_hooks` initializer
 * `lib/open_project/hooks.rb`
 * `app/views/hooks/proto_plugin/_homescreen_after_links.html.erb`
 * `app/views/hooks/proto_plugin/_view_layouts_base_sidebar.html.erb`
 
-Hooks can be used to extend views, controllers and models at certain predefined
-places. Each hook has a name for which a method has to be defined in your hook
-class (see `lib/open_project/proto_plugin/hooks.rb` for further details).
+Hooks can be used to extend views, controllers and models at certain predefined places. Each hook has a name for which a method has to be defined in your hook class, see `lib/open_project/proto_plugin/hooks.rb` for more details.
 
-Example:
+For example:
 
 ```
 render_on :homescreen_after_links, partial: '/hooks/homescreen_after_links'
 ```
 
-The given variables are made available as locals in the provided partial
-which is rendered for the hook if you use `render_on`. Otherwise they will
-be available through the defined hook method's first and only parameter called `context`.
+By using `render_on`, the given variables are made available as locals to the partial for that defined hook. Otherwise they will be available through the defined hook method's first and only parameter named `context`.
 
-Additionally the following context information is also put into context if available:
+Additionally the following context information is put into context if available:
 
 * project - current project
 * request - Request instance
