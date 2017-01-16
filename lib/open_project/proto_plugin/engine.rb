@@ -50,7 +50,7 @@ module OpenProject::ProtoPlugin
       OpenProject::Notifications.subscribe 'user_invited' do |token|
         user = token.user
 
-        Rails.logger.debug "#{user.email} invited to OpenProject"
+        Rails.logger.debug "#{user.mail} invited to OpenProject"
       end
     end
 
