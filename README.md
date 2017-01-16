@@ -95,7 +95,7 @@ The relevant files for the frontend are:
 
 If you want to work within the frontend's AngularJS app you will need to provide a `package.json`. Take a look at the `frontend` folder to see an example Angular controller which is used in the "kittens" index view.
 
-Any changes made to the frontend require running webpack to update. For that run, go to the OpenProject folder (NOT the plugin directory) and execute the following command:
+Any changes made to the frontend require running webpack to update. To do that go to the OpenProject folder (NOT the plugin directory) and execute the following command:
 
 ```
 npm run webpack
