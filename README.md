@@ -41,7 +41,10 @@ If you already have a `Gemfile.plugins` just add the line "gem" line to it insid
 Once you've done that run:
 
 ```
-bundle install && bundle exec rake assets:webpack
+bundle install
+bundle exec rake db:migrate # creates the models from the plugin
+bundle exec rake db:seed # creates default data from the plugin's seeder (`app/seeders`)
+bundle exec rake assets:webpack
 ```
 
 Start the server using:
@@ -54,6 +57,50 @@ In the following sections we will explain some common features that you may want
 
 Each section will list the relevant files you may want to look at and explain the features. Beyond that there are also code comments in the respective files which provide further details.
 
+### Rails generators
+
+The plugin comes with an executable `bin/rails` which you can use to use rails generators for generating everything. You will have to define `OPENPROJECT_ROOT` in your environment for it to work unfortunately, because the plugin requires the core to load.
+
+If your checked-out OpenProject core is located under `/home/me/dev/openproject/core` you can set it like this, for instance in your `.bashrc`:
+
+```
+export OPENPROJECT_ROOT=/home/me/dev/openproject/core
+```
+
+Once you've set that up you can use the rails generators as usual.
+
+For instance this is how you could **generate a model**:
+
+```
+> bundle exec rails generate model Kitten name:string --no-test-framework
+      invoke  active_record
+      create    db/migrate/20170116125942_create_kittens.rb
+      create    app/models/application_record.rb
+      create    app/models/kitten.rb
+```
+
+As you can see a file `application_record.rb` is generated, too. This is new and came with Rails 5. The core should define this class itself. However, it doesn't yet which is an oversight. Once that is fixed you can delete that file. For the time being though you can leave it.
+
+## Seeders
+
+The relevant files for the seeders are:
+
+* `app/seeders/kittens_seeder.rb` - Creates example records.
+
+You can define so called "Seeders" for your plugin which get called when `rake db:seed` is run in the core. The plugin defines a `KittenSeeder` which creates a few example rows to be displayed in the `KittensController`.
+
+A plugin's seeders have to be defined under its namespace within the `BasicData` module, for instance `BasicData::ProtoPlugin::KittensSeeder`.
+They will be discovered and invoked by the core automatically.
+
+## Models
+
+The relevant files for the models are:
+
+* `app/models/kitten.rb` - the code for the model where you can add validations etc.
+* `app/models/application_record.rb` - auto-generated base record
+* `db/migrate/20170116125942_create_kittens.rb` - database migration
+
+The models work as usual in Rails applications.
 
 ## Controllers
 
@@ -63,7 +110,6 @@ The relevant files for the controllers are:
 * `app/views/kittens/index.html.erb` - main template for kittens index view
 
 The controllers work as expected for Rails applications.
-
 
 ## Assets
 
