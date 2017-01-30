@@ -15,4 +15,6 @@ jQuery(document).ready(function() {
       jQuery(this).removeAttr("style");
     }
   );
+  // Widget box emphasized by giving it a nice red border
+  jQuery('#proto-plugin-block').parent().addClass('proto-plugin-widget-box');
 });

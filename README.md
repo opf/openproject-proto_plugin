@@ -141,12 +141,14 @@ _Note: the example menu item registered in this plugin is only visible if you en
 
 ## Homescreen Blocks
 
+By default the homepage contains a number of blocks (widget boxes), namely: Projects, Users, My account, OpenProject community and Administration. You can easily add your own user-defined block so that it will also appears on the homepage.
+
 The relevant files for homescreen blocks are:
 
 * `lib/open_project/proto_plugin/engine.rb` - `proto_plugin.homescreen_blocks` initializer
 * `app/views/homescreen/blocks/_homescreen_block.html.erb`
 
-You can register additional blocks in OpenProject's homescreen in the file `engine.rb` like this:
+In the file `engine.rb` you can register additional blocks in OpenProject's homescreen like this:
 
 ```
 initializer 'proto_plugin.homescreen_blocks' do
@@ -159,6 +161,8 @@ end
 ```
 
 Where the `if` option is optional.
+
+The partial file `_homescreen_block.html.erb` provides the template from which the contents of the block will be generated. Have a look at this file to get a better idea of the possibilities.
 
 
 ## OpenProject::Notification listeners
