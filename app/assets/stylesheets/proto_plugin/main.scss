@@ -23,3 +23,14 @@
 #kittens-menu-item-wrapper a#kittens-menu-item > span {
   color: red;
 }
+
+.kitty-image {
+  position: absolute;
+  bottom: 20px;
+  right: 0;
+
+  img {
+    width: 320px;
+    height: 200px;
+  }
+}
