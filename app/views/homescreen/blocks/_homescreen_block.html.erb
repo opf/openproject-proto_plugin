@@ -1,21 +1,21 @@
 <h3 class="widget-box--header" id="proto-plugin-block">
   <span class="icon-context icon-cart"></span>
-  <span class="widget-box--header-title"><%= l(:proto_plugin_name) %></span>
+  <span class="widget-box--header-title"><%= t(:proto_plugin_name) %></span>
 </h3>
 
 <p class="widget-box--additional-info">A bunch of cute kittens from which to choose.</p>
 
 <ul class="widget-box--arrow-links">
   <li>
-    <%= link_to l(:label_kittens), kittens_path, title: l(:label_kittens) %>
+    <%= link_to t(:label_kittens), kittens_path, title: t(:label_kittens) %>
   </li>
 </ul>
 
 <div class="widget-box--blocks--buttons">
   <% if User.current.allowed_to?(:add_kitten, nil, global: true) %>
-    <%= link_to new_kitten_path, { class: 'button -alt-highlight', aria: {label: l(:label_kitten_new)}, title: l(:label_kitten_new)} do %>
+    <%= link_to new_kitten_path, { class: 'button -alt-highlight', aria: {label: t(:label_kitten_new)}, title: t(:label_kitten_new)} do %>
       <i class="button--icon icon-add"></i>
-      <span class="button--text"><%= l(:label_kitten) %></span>
+      <span class="button--text"><%= t(:label_kitten) %></span>
     <% end %>
   <% end %>
 </div>

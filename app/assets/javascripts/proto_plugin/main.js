@@ -22,9 +22,6 @@
       // Widget box emphasized by giving it a nice red border.
       $('#proto-plugin-block').parent().addClass('proto-plugin-widget-box');
 
-      console.log('Proto plugin OK');
-
-      // TODO
-      //console.log(I18n.t('proto_plugin_name') + ' OK');
+      console.log(I18n.t('proto_plugin_name') + ' OK');
     });
 })(jQuery);
