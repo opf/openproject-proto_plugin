@@ -50,6 +50,10 @@ Start the server using:
 bundle exec rails s
 ```
 
+In order to verify that the plugin has been installed correctly, go to the Administration Plugins Page at `/admin/plugins` and you should be able to find your plugin in the list.
+
+![](images/admin-plugins-page.png?raw=true | width=400)
+
 In the following sections we will explain some common features that you may want to use in your own plugin. This plugin has already been setup with the basic framework to illustrate all these features.
 
 Each section will list the relevant files you may want to look at and explain the features. Beyond that there are also code comments in the respective files which provide further details.
