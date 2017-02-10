@@ -127,6 +127,14 @@ menu :project_menu,
 end
 ```
 
+You are then free to enable the "Kittens module" for a given project by going to that "Project settings" page, for example `/projects/demo-project/settings/modules` and checking the checkbox.
+
+![](images/enable-kittens-module.png?raw=true | width=400)
+
+The menu item will now appear on the top level project page as well as all sub-levels `/projects/demo-project/*`.
+
+![](images/kittens-menu-item.png?raw=true | width=400)
+
 You can add nested menu items by passing a `parent` option to the following items. For instance you could add a child menu item to the menu item shown above by adding `parent: :kittens` as another option.
 
 Menus:
@@ -137,10 +145,6 @@ Menus:
 * my_menu
 * admin_menu
 * project_menu
-
-_Note: the example menu item registered in this plugin is only visible if you enable the "Kittens module" in a project under "Project settings"._
-
-![](images/enable-kittens-module.png?raw=true | width=400)
 
 
 ## Homescreen Blocks
