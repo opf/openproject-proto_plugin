@@ -137,7 +137,7 @@ The menu item will now appear on the top level project page as well as all sub-l
 
 You can add nested menu items by passing a `parent` option to the following items. For instance you could add a child menu item to the menu item shown above by adding `parent: :kittens` as another option.
 
-Menus:
+There are a number of menus available from which to choose:
 
 * top_menu
 * account_menu
@@ -149,7 +149,9 @@ Menus:
 
 ## Homescreen Blocks
 
-By default the homepage contains a number of blocks (widget boxes), namely: Projects, Users, My account, OpenProject community and Administration. You can easily add your own user-defined block so that it will also appears on the homepage.
+By default the homepage contains a number of blocks (widget boxes), namely: "Projects", "Users", "My account", "OpenProject community" and "Administration".
+
+You can easily add your own user-defined block so that it will also appears on the homepage.
 
 The relevant files for homescreen blocks are:
 
@@ -171,6 +173,10 @@ end
 Where the `if` option is optional.
 
 The partial file `_homescreen_block.html.erb` provides the template from which the contents of the block will be generated. Have a look at this file to get a better idea of the possibilities.
+
+This is what you should now see on the homepage:
+
+![](images/kittens-homescreen-block.png?raw=true | width=400)
 
 
 ## OpenProject::Notification listeners
