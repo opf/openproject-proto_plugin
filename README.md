@@ -176,7 +176,7 @@ The partial file `_homescreen_block.html.erb` provides the template from which t
 
 This is what you should now see on the homepage:
 
-![](images/kittens-homescreen-block.png?raw=true | width=400)
+![](images/kitten-homescreen-block.png?raw=true | width=400)
 
 
 ## OpenProject::Notification listeners
