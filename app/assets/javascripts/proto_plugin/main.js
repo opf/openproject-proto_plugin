@@ -6,13 +6,22 @@
 // For this example plugin the file is included into every page through the
 // :header_tags view hook (see `lib/open_project/proto_plugin/hooks.rb`).
 
-jQuery(document).ready(function() {
-  jQuery("#logo").hover(
-    function enter() {
-      jQuery(this).attr("style", "border: 3px solid red;");
-    },
-    function leave() {
-      jQuery(this).removeAttr("style");
-    }
-  );
-});
+(function($) {
+    $(document).ready(function() {
+
+      // OpenProject logo gets thick red border on mouse hover.
+      $("#logo").hover(
+        function enter() {
+          $(this).attr("style", "border: 3px solid red;");
+        },
+        function leave() {
+          $(this).removeAttr("style");
+        }
+      );
+
+      // Widget box emphasized by giving it a nice red border.
+      $('#proto-plugin-block').parent().addClass('proto-plugin-widget-box');
+
+      console.log(I18n.t('js.proto_plugin_name') + ' OK');
+    });
+})(jQuery);

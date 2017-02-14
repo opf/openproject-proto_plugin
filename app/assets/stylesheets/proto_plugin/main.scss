@@ -10,8 +10,8 @@
   border-color: red;
 }
 
-#proto-plugin-block {
-  color: red;
+.proto-plugin-widget-box {
+  border-color: red !important;
 }
 
 .flash.kittens {
@@ -22,4 +22,15 @@
 
 #kittens-menu-item-wrapper a#kittens-menu-item > span {
   color: red;
+}
+
+.kitty-image {
+  position: absolute;
+  bottom: 20px;
+  right: 0;
+
+  img {
+    width: 320px;
+    height: 200px;
+  }
 }

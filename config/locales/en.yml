@@ -1,2 +1,7 @@
 en:
-  label_kitten: Kittens
+  proto_plugin_name: Kitten plugin
+  label_kitten: Kitten
+  label_kittens: Kittens
+  label_kitten_new: New Kitten
+  label_kitten_edit: Edit Kitten
+  label_kitten_delete: Delete Kitten
