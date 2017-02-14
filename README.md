@@ -53,6 +53,10 @@ Start the server using:
 bundle exec rails s
 ```
 
+In order to verify that the plugin has been installed correctly, go to the Administration Plugins Page at `/admin/plugins` and you should be able to find your plugin in the list.
+
+![](images/admin-plugins-page.png?raw=true | width=400)
+
 In the following sections we will explain some common features that you may want to use in your own plugin. This plugin has already been setup with the basic framework to illustrate all these features.
 
 Each section will list the relevant files you may want to look at and explain the features. Beyond that there are also code comments in the respective files which provide further details.
@@ -169,9 +173,17 @@ menu :project_menu,
 end
 ```
 
+You are then free to enable the "Kittens module" for a given project by going to that "Project settings" page, for example `/projects/demo-project/settings/modules` and checking the checkbox.
+
+![](images/enable-kittens-module.png?raw=true | width=400)
+
+The menu item will now appear on the top level project page as well as all sub-levels `/projects/demo-project/*`.
+
+![](images/kittens-menu-item.png?raw=true | width=400)
+
 You can add nested menu items by passing a `parent` option to the following items. For instance you could add a child menu item to the menu item shown above by adding `parent: :kittens` as another option.
 
-Menus:
+There are a number of menus available from which to choose:
 
 * top_menu
 * account_menu
@@ -180,19 +192,19 @@ Menus:
 * admin_menu
 * project_menu
 
-_Note: the example menu item registered in this plugin is only visible if you enable the "Kittens module" in a project under "Project settings"._
-
-![](images/enable-kittens-module.png?raw=true | width=400)
-
 
 ## Homescreen Blocks
+
+By default the homepage contains a number of blocks (widget boxes), namely: "Projects", "Users", "My account", "OpenProject community" and "Administration".
+
+You can easily add your own user-defined block so that it will also appears on the homepage.
 
 The relevant files for homescreen blocks are:
 
 * `lib/open_project/proto_plugin/engine.rb` - `proto_plugin.homescreen_blocks` initializer
 * `app/views/homescreen/blocks/_homescreen_block.html.erb`
 
-You can register additional blocks in OpenProject's homescreen in the file `engine.rb` like this:
+In the file `engine.rb` you can register additional blocks in OpenProject's homescreen like this:
 
 ```
 initializer 'proto_plugin.homescreen_blocks' do
@@ -205,6 +217,12 @@ end
 ```
 
 Where the `if` option is optional.
+
+The partial file `_homescreen_block.html.erb` provides the template from which the contents of the block will be generated. Have a look at this file to get a better idea of the possibilities.
+
+This is what you should now see on the homepage:
+
+![](images/kitten-homescreen-block.png?raw=true | width=400)
 
 
 ## OpenProject::Notification listeners

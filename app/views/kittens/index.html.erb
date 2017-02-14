@@ -1,9 +1,9 @@
-<% html_title("Kittens") %>
+<% html_title t(:label_kittens) %>
 
-<h1>Kittens</h1>
+<h1><%= t(:label_kittens) %></h1>
 
 <p>
-  There's these kittens:
+  These are the kittens:
 </p>
 
 <ul ng-controller="KittensController as kittens">
@@ -12,6 +12,4 @@
   <% end %>
 </ul>
 
-<div style="position: absolute; bottom: 20px; right: 0px;">
-  <%= image_tag 'kitty.png', width: 320, height: 200 %>
-</div>
+<%= render "shared/kitty_image" %>
