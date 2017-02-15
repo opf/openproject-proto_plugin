@@ -85,6 +85,24 @@ For instance this is how you could **generate a model**:
 
 As you can see a file `application_record.rb` is generated, too. This is new and came with Rails 5. The core should define this class itself. However, it doesn't yet which is an oversight. Once that is fixed you can delete that file. For the time being though you can leave it.
 
+### Specs
+
+The relevant files for the specs are:
+
+* `spec/controllers/kittens_controller_spec.rb`
+
+You have to run the specs from within the core. For instance:
+
+```
+RAILS_ENV=test bundle exec rspec `bundle show openproject-proto_plugin`/spec/controllers/kittens_controller_spec.rb
+```
+
+**Travis CI**
+
+A special `.travis.yml` and `Gemfile.plugins` are included which allow you to have Travis run
+the specs for your plugin along with the core specs. This is a good way to test if your plugin
+works properly in conjunction with the core.
+
 ## Seeders
 
 The relevant files for the seeders are:

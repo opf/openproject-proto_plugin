@@ -28,5 +28,8 @@
 # See doc/COPYRIGHT.rdoc for more details.
 #++
 
-# load spec_helper from OpenProject core
-require 'spec_helper'
+FactoryGirl.define do
+  factory :kitten do
+    sequence(:name) { |n| "Kitten #{n}" }
+  end
+end
