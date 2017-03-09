@@ -11,7 +11,7 @@ In order to be able to continue, you will first have to have the following items
 
 * Ruby 2.x
 * Ruby on Rails 5.x
-* Node 6.x, npm and bundle
+* Node 6.x, npm 4.x and bundle
 
 We are assuming that you understand how to develop Ruby on Rails applications and are familiar with controllers, views, asset management, hooks and engines.
 
@@ -41,16 +41,16 @@ If you already have a `Gemfile.plugins` just add the line "gem" line to it insid
 Once you've done that run:
 
 ```
-bundle install
-bundle exec rake db:migrate # creates the models from the plugin
-bundle exec rake db:seed # creates default data from the plugin's seeder (`app/seeders`)
-bundle exec rake assets:webpack
+$ bundle install
+$ bundle exec rake db:migrate # creates the models from the plugin
+$ bundle exec rake db:seed # creates default data from the plugin's seeder (`app/seeders`)
+$ bundle exec rake assets:webpack
 ```
 
 Start the server using:
 
 ```
-bundle exec rails s
+$ bundle exec rails s
 ```
 
 In order to verify that the plugin has been installed correctly, go to the Administration Plugins Page at `/admin/plugins` and you should be able to find your plugin in the list.
@@ -63,12 +63,25 @@ Each section will list the relevant files you may want to look at and explain th
 
 ### Rails generators
 
-The plugin comes with an executable `bin/rails` which you can use to use rails generators for generating everything. You will have to define `OPENPROJECT_ROOT` in your environment for it to work unfortunately, because the plugin requires the core to load.
+The plugin comes with an executable `bin/rails` which you can use to when calling rails generators for generating everything. You will have to define `OPENPROJECT_ROOT` in your environment for it to work unfortunately, because the plugin requires the core to load.
 
-If your checked-out OpenProject core is located under `/home/me/dev/openproject/core` you can set it like this, for instance in your `.bashrc`:
+By `core` we mean the directory under which you originally checked out the OpenProject repository:
 
 ```
-export OPENPROJECT_ROOT=/home/me/dev/openproject/core
+$ git clone https://github.com/opf/openproject.git ~/dev/openproject/core
+$ git checkout dev
+```
+
+So for example, should the core be located under under `~/dev/openproject/core` you can set it like this, for instance in your `.bashrc`:
+
+```
+export OPENPROJECT_ROOT=~/dev/openproject/core
+```
+
+or you can just prepend the relevant rails commands like this:
+
+```
+$ OPENPROJECT_ROOT=~/dev/openproject/core rails generate ...
 ```
 
 Once you've set that up you can use the rails generators as usual.
@@ -76,7 +89,7 @@ Once you've set that up you can use the rails generators as usual.
 For instance this is how you could **generate a model**:
 
 ```
-> bundle exec rails generate model Kitten name:string --no-test-framework
+$ bundle exec rails generate model Kitten name:string --no-test-framework
       invoke  active_record
       create    db/migrate/20170116125942_create_kittens.rb
       create    app/models/application_record.rb
@@ -84,6 +97,14 @@ For instance this is how you could **generate a model**:
 ```
 
 As you can see a file `application_record.rb` is generated, too. This is new and came with Rails 5. The core should define this class itself. However, it doesn't yet which is an oversight. Once that is fixed you can delete that file. For the time being though you can leave it.
+
+Finally, don't forget to run the migration from the core directory:
+
+```
+$ cd $OPENPROJECT_ROOT
+$ rake db:migrate
+```
+
 
 ### Specs
 
@@ -94,7 +115,8 @@ The relevant files for the specs are:
 You have to run the specs from within the core. For instance:
 
 ```
-RAILS_ENV=test bundle exec rspec `bundle show openproject-proto_plugin`/spec/controllers/kittens_controller_spec.rb
+$ cd $OPENPROJECT_ROOT
+$ RAILS_ENV=test bundle exec rspec `bundle show openproject-proto_plugin`/spec/controllers/kittens_controller_spec.rb
 ```
 
 **Travis CI**
@@ -109,7 +131,14 @@ The relevant files for the seeders are:
 
 * `app/seeders/kittens_seeder.rb` - Creates example records.
 
-You can define so called "Seeders" for your plugin which get called when `rake db:seed` is run in the core. The plugin defines a `KittenSeeder` which creates a few example rows to be displayed in the `KittensController`.
+You can define so called "Seeders" for your plugin which get called when `rake db:seed` is run in the core. For example:
+
+```
+$ cd OPENPROJECT_ROOT
+$ rake db:seed
+```
+
+The plugin defines a `KittenSeeder` which creates a few example rows to be displayed in the `KittensController`.
 
 A plugin's seeders have to be defined under its namespace within the `BasicData` module, for instance `BasicData::ProtoPlugin::KittensSeeder`.
 They will be discovered and invoked by the core automatically.
@@ -166,7 +195,7 @@ If you want to work within the frontend's AngularJS app you will need to provide
 Any changes made to the frontend require running webpack to update. To do that go to the OpenProject folder (NOT the plugin directory) and execute the following command:
 
 ```
-npm run webpack
+$ npm run webpack
 ```
 
 
