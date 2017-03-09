@@ -63,7 +63,7 @@ Each section will list the relevant files you may want to look at and explain th
 
 ### Rails generators
 
-The plugin comes with an executable `bin/rails` which you can use to when calling rails generators for generating everything. You will have to define `OPENPROJECT_ROOT` in your environment for it to work unfortunately, because the plugin requires the core to load.
+The plugin comes with an executable `bin/rails` which you can use when calling rails generators for generating everything. You will have to define `OPENPROJECT_ROOT` in your environment for it to work unfortunately, because the plugin requires the core to load.
 
 By `core` we mean the directory under which you originally checked out the OpenProject repository:
 
