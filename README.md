@@ -107,10 +107,9 @@ $ bundle exec rails db:migrate
 
 Now let's double-check that our Kittens table as been seeded:
 
-```$ rails c
-Loading development environment (Rails 5.0.1)
-
-Frame number: 0/5
+```
+$ rails c
+...
 [1] pry(main)> Kitten.pluck(:name)
    (0.3ms)  SELECT `kittens`.`name` FROM `kittens`
 => ["Klaus", "Herbert", "Felix"]
