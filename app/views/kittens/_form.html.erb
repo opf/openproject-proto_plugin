@@ -1,0 +1,17 @@
+<%= form_for(kitten) do |f| %>
+
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <% if kitten.errors[:name].length %>
+          <span class="kitten-error"><%= kitten.errors[:name].join(', ') %></span>
+      <% end %>
+    </p>
+
+    <div class="widget-box--blocks--buttons">
+        <button type="submit" class="button -alt-highlight" title="New Kitten">
+            <span class="button--text">Create Kitten</span>
+        </button>
+    </div>
+
+<% end %>
