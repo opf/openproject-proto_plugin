@@ -234,7 +234,7 @@ The partial `views/kittens/_form,html.erb` is a basic form for inputting the nam
 
 which should end up looking something like this.
 
-![](images/create-new-kitten?raw=true | width=400)
+![](images/create-new-kitten.png?raw=true | width=400)
 
 We leave it up as an exercise for the reader to complete the CRUD with edit and delete actions. Good luck!
 
