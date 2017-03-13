@@ -42,9 +42,9 @@ Once you've done that run:
 
 ```
 $ bundle install
-$ bundle exec rake db:migrate # creates the models from the plugin
-$ bundle exec rake db:seed # creates default data from the plugin's seeder (`app/seeders`)
-$ bundle exec rake assets:webpack
+$ bundle exec rails db:migrate # creates the models from the plugin
+$ bundle exec rails db:seed # creates default data from the plugin's seeder (`app/seeders`)
+$ bundle exec rails assets:webpack
 ```
 
 Start the server using:
@@ -102,9 +102,25 @@ Finally, don't forget to run the migration from the core directory:
 
 ```
 $ cd $OPENPROJECT_ROOT
-$ rake db:migrate
+$ bundle exec rails db:migrate
 ```
 
+Now let's double-check that our Kittens table as been seeded:
+
+```$ rails c
+Loading development environment (Rails 5.0.1)
+
+Frame number: 0/5
+[1] pry(main)> Kitten.pluck(:name)
+   (0.3ms)  SELECT `kittens`.`name` FROM `kittens`
+=> ["Klaus", "Herbert", "Felix"]
+```
+
+Make sure that the application is running (`bundle exec rails s`) and go to `http://localhost:3000/kittens`. You should see something like this:
+
+![](images/kittens-main-page.png?raw=true | width=400)
+
+Great, we're on our way.
 
 ### Specs
 
