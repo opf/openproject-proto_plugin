@@ -42,9 +42,9 @@ Once you've done that run:
 
 ```
 $ bundle install
-$ bundle exec rake db:migrate # creates the models from the plugin
-$ bundle exec rake db:seed # creates default data from the plugin's seeder (`app/seeders`)
-$ bundle exec rake assets:webpack
+$ bundle exec rails db:migrate # creates the models from the plugin
+$ bundle exec rails db:seed # creates default data from the plugin's seeder (`app/seeders`)
+$ bundle exec rails assets:webpack
 ```
 
 Start the server using:
@@ -102,9 +102,24 @@ Finally, don't forget to run the migration from the core directory:
 
 ```
 $ cd $OPENPROJECT_ROOT
-$ rake db:migrate
+$ bundle exec rails db:migrate
 ```
 
+Now let's double-check that our Kittens table as been seeded:
+
+```
+$ rails c
+...
+[1] pry(main)> Kitten.pluck(:name)
+   (0.3ms)  SELECT `kittens`.`name` FROM `kittens`
+=> ["Klaus", "Herbert", "Felix"]
+```
+
+Make sure that the application is running (`bundle exec rails s`) and go to `http://localhost:3000/kittens`. You should see something like this:
+
+![](images/kittens-main-page.png?raw=true | width=400)
+
+Great, we're on our way.
 
 ### Specs
 
@@ -135,7 +150,7 @@ You can define so called "Seeders" for your plugin which get called when `rake d
 
 ```
 $ cd OPENPROJECT_ROOT
-$ rake db:seed
+$ bundle exec rails db:seed
 ```
 
 The plugin defines a `KittenSeeder` which creates a few example rows to be displayed in the `KittensController`.
@@ -151,7 +166,13 @@ The relevant files for the models are:
 * `app/models/application_record.rb` - auto-generated base record
 * `db/migrate/20170116125942_create_kittens.rb` - database migration
 
-The models work as usual in Rails applications.
+The models work as usual in Rails applications. For the sake of completeness, the model validates the name attribute:
+
+```ruby
+class Kitten < ApplicationRecord
+  validates :name, uniqueness: true, length: { minimum: 5 }
+end
+```
 
 ## Controllers
 
@@ -160,7 +181,62 @@ The relevant files for the controllers are:
 * `app/controllers/kittens_controller.rb` - main controller with `:index` entry point
 * `app/views/kittens/index.html.erb` - main template for kittens index view
 
-The controllers work as expected for Rails applications.
+The controllers work as expected for Rails applications. In preparation for the following example, we create a basic minimal controller which only supports creation of new kittens:
+
+```ruby
+class KittensController < ApplicationController
+  def index
+    @kittens = Kitten.all
+    render layout: true
+  end
+
+  def new
+    @kitten = Kitten.new
+  end
+
+  def create
+    @kitten = Kitten.new(kitten_params)
+    ...
+  end
+
+  private
+
+  def kitten_params
+    params.require(:kitten).permit(:name)
+  end
+end
+```
+
+## Create kitten example
+
+As a simple example, let's enable the create kitten button on the kittens homepage block so that it brings the user to a create kitten page. It's already linked to `new_kitten_path` so all we need to do now with the controller already in place is to create `views/kittens/new.html.erb` template:
+
+```
+<h1><%= t(:label_kitten_new) %></h1>
+
+<%= render "form", kitten: @kitten %>
+```
+
+The partial `views/kittens/_form,html.erb` is a basic form for inputting the name:
+
+```
+<%= form_for(kitten) do |f| %>
+
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </p>
+
+    <%= f.submit %>
+
+<% end %>
+```
+
+which should end up looking something like this.
+
+![](images/create-new-kitten.png?raw=true | width=400)
+
+We leave it up as an exercise for the reader to complete the CRUD with edit and delete actions. Good luck!
 
 ## Assets
 
