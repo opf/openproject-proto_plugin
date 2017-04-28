@@ -291,7 +291,8 @@ menu :project_menu,
      after: :overview,
      param: :project_id,
      caption: "Kittens",
-     html: { class: 'icon2 icon-bug', id: "kittens-menu-item" },
+     icon: 'icon2 icon-bug',
+     html: { id: "kittens-menu-item" },
      if: ->(project) { true }
 end
 ```
