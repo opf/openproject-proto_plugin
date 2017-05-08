@@ -1,5 +1,5 @@
 <h3 class="widget-box--header" id="proto-plugin-block">
-  <span class="icon-context icon-cart"></span>
+  <%= op_icon('icon-context icon-cart') %>
   <span class="widget-box--header-title"><%= t(:proto_plugin_name) %></span>
 </h3>
 
@@ -14,7 +14,7 @@
 <div class="widget-box--blocks--buttons">
   <% if User.current.allowed_to?(:add_kitten, nil, global: true) %>
     <%= link_to new_kitten_path, { class: 'button -alt-highlight', aria: {label: t(:label_kitten_new)}, title: t(:label_kitten_new)} do %>
-      <i class="button--icon icon-add"></i>
+      <%= op_icon('button--icon icon-add') %>
       <span class="button--text"><%= t(:label_kitten) %></span>
     <% end %>
   <% end %>
