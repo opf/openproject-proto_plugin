@@ -2,14 +2,7 @@
 
 <h1><%= t(:label_kittens) %></h1>
 
-<p>
-  These are the kittens:
-</p>
 
-<ul ng-controller="KittensController as kittens">
-  <% @kittens.each do |kitten| %>
-    <li ng-click="showMessage()"><%= kitten.name %></li>
-  <% end %>
-</ul>
+
 
 <%= render "shared/kitty_image" %>
