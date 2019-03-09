@@ -15,6 +15,8 @@ if ENV['OPENPROJECT_ROOT']
   # /Users/mkahl/dev/openproject/release/lib
   path = Pathname(ENV["OPENPROJECT_ROOT"]).join("lib")
   $LOAD_PATH.unshift(path.to_s)
+  path = Pathname(ENV["OPENPROJECT_ROOT"])
+  $LOAD_PATH.unshift(path.to_s)
 else
   puts
   puts "Error: please define OPENPROJECT_ROOT pointing to your OpenProject core's root directory"
