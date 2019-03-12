@@ -4,4 +4,5 @@
 
 group :opf_plugins do
   gem 'openproject-proto_plugin', path: 'plugins/this'
+  gem 'activesupport', '~> 5.0.0'
 end
