@@ -15,7 +15,9 @@ In order to be able to continue, you will first have to have the following items
 
 We are assuming that you understand how to develop Ruby on Rails applications and are familiar with controllers, views, asset management, hooks and engines.
 
-The frontend can be written using plain-vanilla JavaScript, but if you choose to integrate directly with the OpenProject frontend then you will have to understand the AngularJS framework.
+To get started with a development environment of the OpenProject core, we recommend you follow our development guides at https://www.openproject.org/help/
+
+The frontend can be written using plain-vanilla JavaScript, but if you choose to integrate directly with the OpenProject frontend then you will have to understand the Angular framework.
 
 
 ## Getting started
@@ -38,7 +40,7 @@ end
 
 If you already have a `Gemfile.plugins` just add the line "gem" line to it inside the `:opf_plugins` group.
 
-Once you've done that run:
+Once you've done that, **in the OpenProject core directory**, run:
 
 ```
 $ bundle install
@@ -50,7 +52,7 @@ $ bundle exec rails assets:webpack
 Start the server using:
 
 ```
-$ bundle exec rails s
+$ bundle exec foreman -f Procfile.dev
 ```
 
 In order to verify that the plugin has been installed correctly, go to the Administration Plugins Page at `/admin/plugins` and you should be able to find your plugin in the list.
@@ -257,23 +259,24 @@ assets %w(proto_plugin/main.css proto_plugin/main.js kitty.png)
 You don't technically have to put the assets into a subfolder with the same name as your plugin. But it's highly recommended to do so in order to avoid naming conflicts. For example, if the image `kitty.png` is not scoped, it might conflict with the core if it were also to include another asset named `kitty.png` too.
 
 
-## Frontend
+## Angular frontend
 
-The relevant files for the frontend are:
+The plugin can create its own Angular module and also hook into parts of the core frontend. The relevant files for the frontend are:
 
-* `package.json`
-* `frontend/app/openproject-proto_plugin-app.js`
-* `frontend/app/controllers/kittens.js`
-* `app/views/kittens/index.html.erb`
+* `frontend/app/module/main.ts`
 
-If you want to work within the frontend's AngularJS app you will need to provide a `package.json`. Take a look at the `frontend` folder to see an example Angular controller which is used in the "kittens" index view.
+  
 
-Any changes made to the frontend require running webpack to update. To do that go to the OpenProject folder (NOT the plugin directory) and execute the following command:
+This file defines the Angular module for this plugin that gets linked into core `frontend/app/src/modules/plugins/linked`
 
+Any changes made to the frontend require running Angular CLI to update. To do that go to the OpenProject folder (NOT the plugin directory) and execute the following command with the plugin contained in the Gemfile.plugins.
+
+```bash
+$ ./bin/setup_dev
+$ npm run serve
 ```
-$ npm run webpack
-```
 
+This will compile and output all changes on the fly as you change it using the Angular CLI.
 
 ## Menu Items
 
