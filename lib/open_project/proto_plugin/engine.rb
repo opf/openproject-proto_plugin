@@ -22,7 +22,8 @@ module OpenProject::ProtoPlugin
       # You may have to enable the project module ("Kittens module") under project
       # settings before you can see the menu entry.
       project_module :kittens_module do
-        permission :view_kittens, { kittens: [:index] }
+        permission :view_kittens, { kittens: %i[index] }
+        permission :manage_kittens, { kittens: %i[new create edit destroy] }
       end
 
       menu :project_menu,

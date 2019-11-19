@@ -1,15 +1,27 @@
 <% html_title t(:label_kittens) %>
 
-<h1><%= t(:label_kittens) %></h1>
 
-<p>
-  These are the kittens:
-</p>
-
-<ul ng-controller="KittensController as kittens">
-  <% @kittens.each do |kitten| %>
-    <li ng-click="showMessage()"><%= kitten.name %></li>
+<%= toolbar(title: t(:label_kittens)) do %>
+  <% if current_user.allowed_to?(:manage_kittens, @project) %>
+    <li class="toolbar-item">
+      <%= link_to(new_plugin_kitten_project_kitten_path, class: 'button') do %>
+        <span class="button--text"><%= t(:label_kitten_new) %></span>
+      <% end %>
+    </li>
   <% end %>
-</ul>
+<% end %>
+
+
+<% if @kittens.empty? %>
+  <%= no_results_box %>
+<% else %>
+  <p>
+    These are the kittens:
+  </p>
+  <% @kittens.each do |kitten| %>
+    <%= tag 'kitten-component', data: { 'kitten-name': kitten.name } %>
+  <% end %>
+<% end %>
+
 
 <%= render "shared/kitty_image" %>

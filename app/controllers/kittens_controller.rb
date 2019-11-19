@@ -1,6 +1,5 @@
 class KittensController < ApplicationController
-  # this is necessary if you want the project menu in the sidebar for your view
-  # before_filter :find_optional_project, only: :index
+  before_action :find_optional_project
 
   def index
     @kittens = Kitten.all

@@ -1,17 +1,17 @@
-<%= form_for(kitten) do |f| %>
+<%= labelled_tabular_form_for(kitten, url: { action: kitten.new_record? ? :create : :update }) do |f| %>
 
-    <p>
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-      <% if kitten.errors[:name].length %>
-          <span class="kitten-error"><%= kitten.errors[:name].join(', ') %></span>
-      <% end %>
-    </p>
+<%= error_messages_for kitten %>
+
+<section class="form--section">
+  <div class="form--field -required">
+    <%= f.text_field :name, required: true %>
+  </div>
 
     <div class="widget-box--blocks--buttons">
         <button type="submit" class="button -alt-highlight" title="New Kitten">
-            <span class="button--text">Create Kitten</span>
+            <span class="button--text"><%= t(:button_create) %></span>
         </button>
     </div>
+</section>
 
 <% end %>

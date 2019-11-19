@@ -55,7 +55,7 @@ $ bundle exec rails s
 
 In order to verify that the plugin has been installed correctly, go to the Administration Plugins Page at `/admin/plugins` and you should be able to find your plugin in the list.
 
-![](images/admin-plugins-page.png?raw=true | width=400)
+![](images/admin-plugins-page.png?raw=true)
 
 In the following sections we will explain some common features that you may want to use in your own plugin. This plugin has already been setup with the basic framework to illustrate all these features.
 
@@ -117,7 +117,7 @@ $ rails c
 
 Make sure that the application is running (`bundle exec rails s`) and go to `http://localhost:3000/kittens`. You should see something like this:
 
-![](images/kittens-main-page.png?raw=true | width=400)
+![](images/kittens-main-page.png?raw=true)
 
 Great, we're on our way.
 
@@ -234,7 +234,7 @@ The partial `views/kittens/_form,html.erb` is a basic form for inputting the nam
 
 which should end up looking something like this.
 
-![](images/create-new-kitten.png?raw=true | width=400)
+![](images/create-new-kitten.png?raw=true)
 
 We leave it up as an exercise for the reader to complete the CRUD with edit and delete actions. Good luck!
 
@@ -299,11 +299,11 @@ end
 
 You are then free to enable the "Kittens module" for a given project by going to that "Project settings" page, for example `/projects/demo-project/settings/modules` and checking the checkbox.
 
-![](images/enable-kittens-module.png?raw=true | width=400)
+![](images/enable-kittens-module.png?raw=true)
 
 The menu item will now appear on the top level project page as well as all sub-levels `/projects/demo-project/*`.
 
-![](images/kittens-menu-item.png?raw=true | width=400)
+![](images/kittens-menu-item.png?raw=true)
 
 You can add nested menu items by passing a `parent` option to the following items. For instance you could add a child menu item to the menu item shown above by adding `parent: :kittens` as another option.
 
@@ -346,7 +346,7 @@ The partial file `_homescreen_block.html.erb` provides the template from which t
 
 This is what you should now see on the homepage:
 
-![](images/kitten-homescreen-block.png?raw=true | width=400)
+![](images/kitten-homescreen-block.png?raw=true)
 
 
 ## OpenProject::Notification listeners
