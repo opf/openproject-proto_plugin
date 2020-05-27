@@ -3,7 +3,7 @@ module BasicData
     ##
     # Seeders defined under `BasicData::<PluginNameSpace>` get discovered by the core
     # automatically.
-    class KittensSeeder < Seeder
+    class KittensSeeder < ::Seeder
       ##
       # The Seeder's main method called during `rake db:seed`.
       def seed_data!
