@@ -9,13 +9,13 @@ To get started quickly you may just copy this plugin, remove the bits you don't 
 
 In order to be able to continue, you will first have to have the following items installed:
 
-* Ruby 2.x
-* Ruby on Rails 5.x
-* Node 6.x, npm 4.x and bundle
+* Ruby >= 2.6
+* Ruby on Rails 6.x
+* Node LTS (currently 10.12), npm 6.x and bundle 2.x
 
 We are assuming that you understand how to develop Ruby on Rails applications and are familiar with controllers, views, asset management, hooks and engines.
 
-To get started with a development environment of the OpenProject core, we recommend you follow our development guides at https://www.openproject.org/help/
+To get started with a development environment of the OpenProject core, we recommend you follow our development guides at https://docs.openproject.org/development/
 
 The frontend can be written using plain-vanilla JavaScript, but if you choose to integrate directly with the OpenProject frontend then you will have to understand the Angular framework.
 
