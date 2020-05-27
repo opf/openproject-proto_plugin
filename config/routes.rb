@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  scope '', as: 'plugin_kitten' do
-    scope 'projects/:project_id', as: 'project' do
-      resources :kittens
-    end
+  scope '', as: 'kitten_plugin' do
+    resources :kittens
   end
 end

@@ -12,7 +12,6 @@ class KittensController < ApplicationController
   end
 
   def create
-    # TODO
     @kitten = Kitten.new(kitten_params)
     if @kitten.save
       # notify_changed_kittens(:created, @kitten)
@@ -28,7 +27,6 @@ class KittensController < ApplicationController
 
   def kitten_params
     params.require(:kitten).permit(:name)
-    # params.require(:kitten).permit(:name, :project_id)
   end
 
   # def notify_changed_kittens(action, changed_kitten)

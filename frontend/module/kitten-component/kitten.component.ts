@@ -1,7 +1,4 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {AbstractWidgetComponent} from "core-app/modules/grids/widgets/abstract-widget.component";
-import {GridWidgetResource} from "core-app/modules/hal/resources/grid-widget-resource";
-import {WidgetChangeset} from "core-app/modules/grids/widgets/widget-changeset";
 
 @Component({
   templateUrl: './kitten.component.html',
