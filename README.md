@@ -26,7 +26,7 @@ To include this plugin, you need to create a file called `Gemfile.plugins` in yo
 
 ```
 group :opf_plugins do
-  gem "openproject-proto_plugin", git: "git@github.com:opf/openproject-proto_plugin.git", branch: "master"
+  gem "openproject-proto_plugin", git: "git@github.com:opf/openproject-proto_plugin.git", branch: "dev"
 end
 ```
 
