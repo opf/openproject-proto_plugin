@@ -1,12 +1,13 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 
 @Component({
+  selector: 'kitten',
   templateUrl: './kitten.component.html',
   styleUrls: ['./kitten.component.sass'],
 })
 export class KittenComponent implements OnInit {
 
-  public name:string;
+  @Input() public name:string;
 
   constructor(private elementRef:ElementRef) {
   }
@@ -15,6 +16,6 @@ export class KittenComponent implements OnInit {
     // Since this component is bootstrapped
     // We read input from data fields instead of angular inputs
     const element = this.elementRef.nativeElement as HTMLElement;
-    this.name = element.dataset.kittenName as string;
+    this.name = this.name || element.dataset.kittenName as string;
   }
 }
