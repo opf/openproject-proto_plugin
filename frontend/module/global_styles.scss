@@ -1,10 +1,9 @@
 // CSS goes here.
-// The file has to be included into the page first via
+// The file will be automatically included as global styles
 //
-//   <%= stylesheet_link_tag 'proto_plugin/main', plugin: :openproject_proto_plugin %>
-//
-// For this example plugin the file is included into every page through the
-// :header_tags view hook (see `lib/open_project/proto_plugin/hooks.rb`).
+// We however recommend you create component-scoped styles in angular
+// components whenever possible
+
 
 #homescreen-after-links .widget-box {
   border-color: red;
@@ -32,7 +31,7 @@
   img {
     width: 320px;
     height: 200px;
-  }
+}
 }
 
 .kitten-error {
