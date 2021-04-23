@@ -1,5 +1,8 @@
 class KittensController < ApplicationController
-  before_action :find_optional_project
+  # Check for the permissions of the user
+  # as defined in the engine.rb permissions block
+  before_action :find_project_by_project_id
+  before_action :authorize
 
   def index
     @kittens = Kitten.all

@@ -22,8 +22,13 @@ module OpenProject::ProtoPlugin
       # You may have to enable the project module ("Kittens module") under project
       # settings before you can see the menu entry.
       project_module :kittens_module do
-        permission :view_kittens, { kittens: %i[index] }
-        permission :manage_kittens, { kittens: %i[new create edit destroy] }
+        permission :view_kittens,
+                   kittens: %i[index],
+                   angular_kittens: %i[show]
+
+        permission :manage_kittens,
+                   kittens: %i[new create edit destroy],
+                   angular_kittens: %i[show]
       end
 
       menu :project_menu,
@@ -32,9 +37,16 @@ module OpenProject::ProtoPlugin
            after: :overview,
            param: :project_id,
            caption: "Kittens",
-           icon: 'icon2 icon-bug',
+           icon: 'icon2 icon-settings',
            html: { id: "kittens-menu-item" },
            if: ->(project) { true }
+
+      menu :top_menu,
+           :angular_kittens,
+           '/angular_kittens',
+           after: :kittens,
+           param: :project_id,
+           caption: "Kittens Frontend"
     end
 
     initializer 'proto_plugin.register_hooks' do
@@ -57,6 +69,6 @@ module OpenProject::ProtoPlugin
       end
     end
 
-    assets %w(proto_plugin/main.css proto_plugin/main.js kitty.png)
+    assets %w(kitty.png)
   end
 end

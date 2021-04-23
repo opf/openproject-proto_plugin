@@ -9,14 +9,6 @@ module OpenProject::ProtoPlugin
     # here we render a partial
     render_on :homescreen_after_links, partial: 'hooks/proto_plugin/homescreen_after_links'
 
-    # you can use inline partials as well:
-    render_on :view_layouts_base_html_head, inline: <<-VIEW
-<% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'proto_plugin/main', plugin: :openproject_proto_plugin %>
-  <%= javascript_include_tag 'proto_plugin/main', plugin: :openproject_proto_plugin %>
-<% end %>
-VIEW
-
     ##
     # Any string returned by this method will be rendered at the position of
     # the `view_layouts_base_sidebar` hook. Here we want to use a partial

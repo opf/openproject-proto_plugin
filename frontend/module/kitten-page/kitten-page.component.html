@@ -1,0 +1,18 @@
+<div class="toolbar-container">
+    <div class="toolbar">
+        <div class="title-container">
+            <h2 [textContent]="text.kittens"></h2>
+        </div>
+    </div>
+</div>
+
+<p>
+    You're on the Angular kitten page.
+    <br/>
+    This component is rendered by the ui-router route that matches /angular_kittens.
+    The Rails backend only renders an empty view for the frontend to hook into.
+</p>
+
+<p>Here you can also use your own components if you'd like</p>
+
+<kitten [name]="kittenName"></kitten>

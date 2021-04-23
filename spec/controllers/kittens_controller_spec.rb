@@ -32,28 +32,19 @@ require 'spec_helper'
 
 describe KittensController, type: :controller do
   let(:user) { FactoryBot.create :admin }
-
-  let!(:kittens) { FactoryBot.create_list :kitten, 5 }
+  let(:project) { FactoryBot.create :project }
 
   before do
     login_as user
   end
 
-  render_views
-
   describe "index" do
     before do
-      get :index
-    end
-
-    it "list existing kittens" do
-      kittens.each do |kitten|
-        expect(response.body).to have_text kitten.name
-      end
+      get :index, params: { project_id: project.id }
     end
 
     it 'renders a template' do
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response).to render_template 'kittens/index'
     end
   end
