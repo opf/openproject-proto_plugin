@@ -7,13 +7,19 @@
 
 <ul class="widget-box--arrow-links">
   <li>
-    <%= link_to t(:label_kittens), kitten_plugin_kittens_path, title: t(:label_kittens) %>
+    <%= link_to t(:label_kittens),
+                kitten_plugin_project_kittens_path(project_id: Project.first.identifier),
+                title: t(:label_kittens) %>
   </li>
 </ul>
 
 <div class="widget-box--blocks--buttons">
   <% if User.current.allowed_to?(:manage_kittens, nil, global: true) %>
-    <%= link_to new_kitten_plugin_kitten_path, { class: 'button -alt-highlight', aria: {label: t(:label_kitten_new)}, title: t(:label_kitten_new)} do %>
+    <%= link_to new_kitten_plugin_project_kitten_path(project_id: Project.first.identifier), {
+      class: 'button -alt-highlight',
+      aria: {label: t(:label_kitten_new)},
+      title: t(:label_kitten_new)
+    } do %>
       <%= op_icon('button--icon icon-add') %>
       <span class="button--text"><%= t(:label_kitten) %></span>
     <% end %>
