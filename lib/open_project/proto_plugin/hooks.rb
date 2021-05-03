@@ -5,7 +5,7 @@ module OpenProject::ProtoPlugin
   #
   # Alternatively you can use the `render_on` helper as shown for the `homescreen_after_links`
   # and the `view_layouts_base_html_head` hooks.
-  class Hooks < Redmine::Hook::ViewListener
+  class Hooks < OpenProject::Hook::ViewListener
     # here we render a partial
     render_on :homescreen_after_links, partial: 'hooks/proto_plugin/homescreen_after_links'
 
