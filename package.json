@@ -2,7 +2,6 @@
   "name": "openproject-proto_plugin",
   "version": "0.1.0",
   "description": "OpenProject Prototype Plugin",
-  "main": "frontend/app/openproject-proto_plugin-app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
