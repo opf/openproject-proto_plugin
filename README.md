@@ -46,7 +46,7 @@ Once you've done that, **in the OpenProject core directory**, run:
 $ bundle install
 $ bundle exec rails db:migrate # creates the models from the plugin
 $ bundle exec rails db:seed # creates default data from the plugin's seeder (`app/seeders`)
-$ bundle exec rails assets:webpack
+$ bundle exec rails assets:angular
 ```
 
 Start the server using:
@@ -265,7 +265,7 @@ The plugin can create its own Angular module and also hook into parts of the cor
 
 * `frontend/app/module/main.ts`
 
-  
+
 
 This file defines the Angular module for this plugin that gets linked into core `frontend/app/src/modules/plugins/linked`
 
