@@ -269,7 +269,6 @@ The plugin can create its own Angular module and also hook into parts of the cor
 * `frontend/app/module/main.ts`
 
 
-
 This file defines the Angular module for this plugin that gets linked into core `frontend/app/src/modules/plugins/linked`
 
 Any changes made to the frontend require running Angular CLI to update. To do that go to the OpenProject folder (NOT the plugin directory) and execute the following command with the plugin contained in the Gemfile.plugins.
