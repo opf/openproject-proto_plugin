@@ -15,13 +15,14 @@ import { WorkPackageResource } from "core-app/features/hal/resources/work-packag
     case (kittenAction as WorkPackageAction).key:
       kittenActionHandler(this.getSelectedWorkPackages());
       break;
+
+  icons are located in /vendor/openproject-icon-font/src/icon.svg
+  if no icon is defined, then the key name is used to match an icon.
 */
 
 type WorkPackagesHandler = (workPackages: WorkPackageResource[]) => void;
 
-// TODO handle not logged in
-// icons are located in /vendor/openproject-icon-font/src/icon.svg
-// if no icon is defined, then the key name is used to match an icon.
+// TODO? menu item is shown when not logged in. should be hidden?
 export const kittenAction: WorkPackageAction = {
   text: "Create Kittens",
   key: "createkittens",
