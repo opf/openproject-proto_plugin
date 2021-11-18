@@ -35,15 +35,18 @@
  * This will allow your IDE to pick up the angular project and provide import assistance and so on.
  */
 
-import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
-import {CommonModule} from "@angular/common";
-import {KittenComponent} from "core-app/modules/plugins/linked/openproject-proto_plugin/kitten-component/kitten.component";
-import {HookService} from "core-app/modules/plugins/hook-service";
-
-import './global_scripts'
-import {KITTEN_ROUTES} from 'core-app/modules/plugins/linked/openproject-proto_plugin/kitten.routes';
-import {UIRouterModule} from '@uirouter/angular';
-import {KittenPageComponent} from 'core-app/modules/plugins/linked/openproject-proto_plugin/kitten-page/kitten-page.component';
+import {
+  APP_INITIALIZER,
+  Injector,
+  NgModule,
+} from '@angular/core';
+import './global_scripts';
+import { UIRouterModule } from '@uirouter/angular';
+import { HookService } from 'core-app/features/plugins/hook-service';
+import { KittenComponent } from 'core-app/features/plugins/linked/openproject-proto_plugin/kitten-component/kitten.component';
+import { CommonModule } from '@angular/common';
+import { KITTEN_ROUTES } from 'core-app/features/plugins/linked/openproject-proto_plugin/kitten.routes';
+import { KittenPageComponent } from 'core-app/features/plugins/linked/openproject-proto_plugin/kitten-page/kitten-page.component';
 
 export function initializeProtoPlugin(injector:Injector) {
   return () => {
@@ -54,7 +57,7 @@ export function initializeProtoPlugin(injector:Injector) {
     // preventing us from using components like this kitten component
     hookService.register('openProjectAngularBootstrap', () => {
       return [
-        { selector: 'kitten-component', cls: KittenComponent }
+        { selector: 'kitten-component', cls: KittenComponent },
       ];
     });
   };
@@ -63,12 +66,17 @@ export function initializeProtoPlugin(injector:Injector) {
 @NgModule({
   imports: [
     CommonModule,
-    UIRouterModule.forChild({ states: KITTEN_ROUTES })
+    UIRouterModule.forChild({ states: KITTEN_ROUTES }),
   ],
   providers: [
     // This initializer gets called when the Angular frontend is being loaded by the core
     // use it to hook up global listeners or bootstrap components
-    { provide: APP_INITIALIZER, useFactory: initializeProtoPlugin, deps: [Injector], multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeProtoPlugin,
+      deps: [Injector],
+      multi: true,
+    },
   ],
   declarations: [
     // Declare the component for angular to use
@@ -78,6 +86,3 @@ export function initializeProtoPlugin(injector:Injector) {
 })
 export class PluginModule {
 }
-
-
-

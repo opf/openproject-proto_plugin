@@ -1,9 +1,16 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+} from '@angular/core';
 
 @Component({
-  selector: 'kitten',
+  selector: 'op-kitten',
   templateUrl: './kitten.component.html',
   styleUrls: ['./kitten.component.sass'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KittenComponent implements OnInit {
 
