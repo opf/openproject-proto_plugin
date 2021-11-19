@@ -64,7 +64,8 @@ In the following sections we will explain some common features that you may want
 Each section will list the relevant files you may want to look at and explain the features. Beyond that there are also code comments in the respective files which provide further details.
 
 ### Plugin Path in the OpenProject core App
-the files in frontend repository imports other modules in the core app with the `core-app/` prefix which is an alias pointing to `<core-app-root>/frontend/src/app` defined in the `tsconfig.base.json` file, be careful to update import path when configurations change
+
+The files in frontend repository imports other modules in the core app with the `core-app/` prefix which is an alias pointing to `<core-app-root>/frontend/src/app` defined in the `tsconfig.base.json` file, be careful to update import path when configurations change
 
 ### Rails generators
 
