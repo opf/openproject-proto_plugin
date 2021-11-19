@@ -37,13 +37,13 @@
 
 import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {KittenComponent} from "core-app/modules/plugins/linked/openproject-proto_plugin/kitten-component/kitten.component";
-import {HookService} from "core-app/modules/plugins/hook-service";
+import {KittenComponent} from "core-app/features/plugins/linked/openproject-proto_plugin/kitten-component/kitten.component";
+import {HookService} from "core-app/features/plugins/hook-service";
 
 import './global_scripts'
-import {KITTEN_ROUTES} from 'core-app/modules/plugins/linked/openproject-proto_plugin/kitten.routes';
+import {KITTEN_ROUTES} from 'core-app/features/plugins/linked/openproject-proto_plugin/kitten.routes';
 import {UIRouterModule} from '@uirouter/angular';
-import {KittenPageComponent} from 'core-app/modules/plugins/linked/openproject-proto_plugin/kitten-page/kitten-page.component';
+import {KittenPageComponent} from 'core-app/features/plugins/linked/openproject-proto_plugin/kitten-page/kitten-page.component';
 
 export function initializeProtoPlugin(injector:Injector) {
   return () => {
@@ -78,6 +78,3 @@ export function initializeProtoPlugin(injector:Injector) {
 })
 export class PluginModule {
 }
-
-
-
