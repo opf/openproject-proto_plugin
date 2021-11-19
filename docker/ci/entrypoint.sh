@@ -59,8 +59,7 @@ if [ "$1" == "run-units" ]; then
 	shift
 	execute "cd frontend && npm install && npm run test"
 	execute "time bundle exec rspec -I spec_legacy spec_legacy"
-  # TODO: replace test command
-	if ! execute "time bundle exec rake -T" ; then
+	if ! execute "time bundle exec rspec --exclude-pattern '/plugin/spec/features/**/*' /plugin/spec/**/*_spec.rb"; then
 		execute "cat tmp/parallel_summary.log"
 		cleanup
 		exit 1
@@ -75,8 +74,7 @@ if [ "$1" == "run-features" ]; then
 	execute "cd frontend; npm install ; cd -"
 	execute "bundle exec rake assets:precompile"
 	execute "cp -rp config/frontend_assets.manifest.json public/assets/frontend_assets.manifest.json"
-  # TODO: replace test command
-	if ! execute "time bundle exec rake -T" ; then
+	if ! execute "time bundle exec rspec /plugin/spec/features/**/*_spec.rb" ; then
 		execute "cat tmp/parallel_summary.log"
 		cleanup
 		exit 1
