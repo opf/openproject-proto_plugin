@@ -1,9 +1,3 @@
-#4. run setup scripts for Coreproject & symlink frontend project
-#5. run rails migrate and seed
-#set whatever environment variable we need
-#6. run frontend test
-#7. run backend test
-
 # Instructions https://www.openproject.org/docs/installation-and-operations/installation/docker/#openproject-plugins
 
 # Pull the latest Production image from docker hub
