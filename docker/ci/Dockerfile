@@ -42,7 +42,7 @@ COPY Gemfile.plugins /app/
 
 COPY ./entrypoint.sh /usr/sbin/entrypoint.sh
 
-VOLUME ["/usr/local/bundle", "/plugin", "/app/tmp" ]
+VOLUME ["/usr/local/bundle", "/plugin", "/app/tmp"]
 
 WORKDIR /app
 
