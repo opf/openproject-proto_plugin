@@ -1,4 +1,4 @@
-name: Plugin/Lint
+name: lint
 on: push
 
 jobs:
@@ -12,4 +12,4 @@ jobs:
           node-version: 14.x
       - name: test
         run: |
-          docker-compose -f docker/ci/docker-compose.yml run-frontend-lint
+          docker-compose -f docker/ci/docker-compose.yml run ci run-frontend-lint
