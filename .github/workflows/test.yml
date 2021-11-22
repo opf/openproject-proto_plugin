@@ -11,6 +11,7 @@ jobs:
           node-version: 14.x
 
   units:
+    runs-on: ubuntu-latest
     env:
       CI_CACHE_PATH: "/tmp/cache"
       CI_RETRY_COUNT: 3
