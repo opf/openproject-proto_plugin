@@ -58,7 +58,7 @@ fi
 if [ "$1" == "run-units" ]; then
 	shift
 	execute "cd frontend && npm install && npm run test"
-	# execute "time bundle exec rspec -I spec_legacy spec_legacy"
+	execute "time bundle exec rspec -I spec_legacy spec_legacy"
 	if ! execute "time bundle exec rspec --exclude-pattern '/plugin/spec/features/**/*' /plugin/spec/**/*_spec.rb"; then
 		execute "cat tmp/parallel_summary.log"
 		cleanup
