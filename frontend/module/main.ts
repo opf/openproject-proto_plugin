@@ -57,7 +57,7 @@ export function initializeProtoPlugin(injector:Injector) {
         const index = _.findIndex(actions, { link: 'logTime' });
         return index !== -1 ? index + 1 : actions.length;
       },
-      text: I18n.t('js.button_create_kittens_table'),
+      text: I18n.t('js.button_create_kittens'),
     }));
   });
 
@@ -74,6 +74,7 @@ export function initializeProtoPlugin(injector:Injector) {
     });
   };
 }
+
 
 @NgModule({
   imports: [
