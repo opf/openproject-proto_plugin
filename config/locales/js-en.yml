@@ -1,3 +1,4 @@
 en:
   js:
     proto_plugin_name: 'Kitten plugin'
+    button_create_kittens: 'Create Kittens'
