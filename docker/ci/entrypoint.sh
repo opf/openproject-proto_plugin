@@ -32,7 +32,7 @@ execute() {
 }
 
 cleanup() {
-        rm -rf tmp/cache/parallel*
+  rm -rf tmp/cache/parallel*
 }
 
 if [ "$1" == "setup-tests" ]; then
@@ -83,6 +83,12 @@ if [ "$1" == "run-features" ]; then
 		exit 0
 	fi
 fi
+
+if [ "$1" == "run-frontend-lint" ]; then
+	shift
+	execute "cd frontend && npm install && npm run lint"
+fi
+
 
 if [ ! -z "$1" ] ; then
 	exec "$@"
