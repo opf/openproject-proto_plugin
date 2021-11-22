@@ -87,6 +87,7 @@ fi
 if [ "$1" == "run-frontend-lint" ]; then
 	shift
 	execute "cd frontend && npm install && npm run lint"
+  exit 0
 fi
 
 
