@@ -65,16 +65,16 @@ export function initializeProtoPlugin(injector:Injector) {
     CommonModule,
     UIRouterModule.forChild({ states: KITTEN_ROUTES })
   ],
-  providers: [
-    // This initializer gets called when the Angular frontend is being loaded by the core
-    // use it to hook up global listeners or bootstrap components
-    { provide: APP_INITIALIZER, useFactory: initializeProtoPlugin, deps: [Injector], multi: true },
-  ],
+  providers: [],
   declarations: [
     // Declare the component for angular to use
     KittenComponent,
     KittenPageComponent,
   ],
 })
+
 export class PluginModule {
+  constructor(injector:Injector) {
+    initializeProtoPlugin(injector);
+  }
 }
