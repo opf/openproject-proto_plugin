@@ -14,7 +14,7 @@ services:
     tmpfs:
       - "/tmp"
     volumes:
-      - "../..:/plugin"
+      - "../..:/home/dev/plugin"
       - "${CI_CACHE_PATH:-/tmp}/op-bundle:/usr/local/bundle"
       - "${CI_CACHE_PATH:-/tmp}/op-node:/home/dev/openproject/frontend/node_modules"
     networks:
