@@ -59,15 +59,13 @@ fi
 if [ "$1" == "run-units" ]; then
 	shift
 	execute "cd frontend && npm install && npm run test -- --include=src/app/features/plugins/linked/${PLUGIN_FOLDER_NAME}"
-	execute "time bundle exec rspec -I spec_legacy spec_legacy"
-	if ! execute "time bundle exec rspec --exclude-pattern '/plugin/spec/features/**/*' /plugin/spec/**/*_spec.rb"; then
-		execute "cat tmp/parallel_summary.log"
-		cleanup
-		exit 1
-	else
-		cleanup
-		exit 0
-	fi
+fi
+
+if [ "$1" == "run-rspec" ]; then 
+	shift
+	execute "git clone --depth 1 https://github.com/opf/openproject.git tmp/op-core"
+	execute "mv tmp/op-core/spec spec"
+	execute "time bundle exec rspec ../plugin"
 fi
 
 if [ "$1" == "run-features" ]; then

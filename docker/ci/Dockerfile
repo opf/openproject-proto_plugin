@@ -13,7 +13,8 @@ WORKDIR /app
 
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    time libpq-dev default-jre-headless firefox-esr
+    time libpq-dev default-jre-headless firefox-esr \
+    git
 
 # Try Downloading binary from fallback source if first one fails
 RUN for url in $CHROME_SOURCE_URL; do \
@@ -42,12 +43,12 @@ COPY Gemfile.plugins /app/
 
 COPY ./entrypoint.sh /usr/sbin/entrypoint.sh
 
-VOLUME ["/usr/local/bundle", "/plugin", "/app/tmp"]
+VOLUME ["/usr/local/bundle", "/plugin", "/app/tmp", "/app/spec"]
 
 WORKDIR /app
 
 ENTRYPOINT [ "/usr/sbin/entrypoint.sh" ]
-CMD ["setup-tests", "bash"]
+CMD ["setup-tests", "run-rspec"]
 
 # ruby servers
 EXPOSE 3000-3016
