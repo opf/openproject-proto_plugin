@@ -23,9 +23,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-core-tests-units-
             ${{ runner.os }}-core-tests-
-      - name: test
+      - name: build
         run: |
           docker-compose -f docker/ci/docker-compose.yml build --pull ci
+      - name: test
+        run: |
           docker-compose -f docker/ci/docker-compose.yml run ci setup-tests run-units
       - name: cleanup
         if: ${{ always() }}
@@ -50,9 +52,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-core-tests-features-
             ${{ runner.os }}-core-tests-
-      - name: test
+      - name: build
         run: |
           docker-compose -f docker/ci/docker-compose.yml build --pull ci
+      - name: test
+        run: |
           docker-compose -f docker/ci/docker-compose.yml run ci setup-tests run-rspec
       - name: cleanup
         if: ${{ always() }}

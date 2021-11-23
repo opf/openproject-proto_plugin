@@ -63,8 +63,11 @@ fi
 
 if [ "$1" == "run-rspec" ]; then 
 	shift
+	execute "rm -rf tmp/op-core spec"
 	execute "git clone --depth 1 https://github.com/opf/openproject.git tmp/op-core"
-	execute "mv tmp/op-core/spec spec"
+	echo "moving spec folder"
+	execute "mv tmp/op-core/spec ./"
+	echo "running rspec tests"
 	execute "time bundle exec rspec ../plugin"
 fi
 

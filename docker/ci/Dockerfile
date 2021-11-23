@@ -43,12 +43,11 @@ COPY Gemfile.plugins /app/
 
 COPY ./entrypoint.sh /usr/sbin/entrypoint.sh
 
-VOLUME ["/usr/local/bundle", "/plugin", "/app/tmp", "/app/spec"]
+VOLUME ["/usr/local/bundle", "/plugin", "/app/tmp" ]
 
 WORKDIR /app
 
 ENTRYPOINT [ "/usr/sbin/entrypoint.sh" ]
-CMD ["setup-tests", "run-rspec"]
 
 # ruby servers
 EXPOSE 3000-3016
