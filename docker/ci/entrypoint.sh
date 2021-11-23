@@ -94,7 +94,7 @@ if [ "$1" == "run-rspec-features" ]; then
 	execute "mv tmp/op-core/spec ./"
 
 	echo "running rspec features tests"
-	if ! execute "time bundle exec rspec /plugin/spec/features/**/*_spec.rb" ; then
+	if ! execute "time bundle exec rspec ../plugin/spec/features/**/*_spec.rb" ; then
 		execute "cat tmp/parallel_summary.log"
 		cleanup
 		exit 1
