@@ -58,6 +58,7 @@ fi
 
 if [ "$1" == "run-angular-unit" ]; then
 	shift
+	echo "running angular unit tests"
 	if ! execute "cd frontend && npm install && npm run test -- --include=src/app/features/plugins/linked/${PLUGIN_FOLDER_NAME}"; then
 		cleanup
 		exit 1
@@ -73,8 +74,8 @@ if [ "$1" == "run-rspec-unit" ]; then
 	execute "git clone --depth 1 https://github.com/opf/openproject.git tmp/op-core"
 	echo "moving spec folder"
 	execute "mv tmp/op-core/spec ./"
-	echo "running rspec tests"
-	
+
+	echo "running rspec unit tests"
 	if ! execute "time bundle exec rspec --exclude-pattern '/plugin/spec/features/**/*' /plugin/spec/**/*_spec.rb"; then
 		execute "cat tmp/parallel_summary.log"
 		cleanup
@@ -87,6 +88,12 @@ fi
 
 if [ "$1" == "run-rspec-features"]; then 
 	shift
+	execute "rm -rf tmp/op-core spec"
+	execute "git clone --depth 1 https://github.com/opf/openproject.git tmp/op-core"
+	echo "moving spec folder"
+	execute "mv tmp/op-core/spec ./"
+
+	echo "running rspec features tests"
 	if ! execute "time bundle exec rspec /plugin/spec/features/**/*_spec.rb" ; then
 		execute "cat tmp/parallel_summary.log"
 		cleanup

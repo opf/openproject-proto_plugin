@@ -2,7 +2,7 @@
 
 # Pull the latest Production image from docker hub
 FROM openproject/community:12.0.1
-MAINTAINER info@bitcrowd.net
+MAINTAINER operations@openproject.com
 
 # Set the environment to the same configuration as the <core_app>/Docker/CI/Dockerfile
 
@@ -34,9 +34,6 @@ ENV CAPYBARA_DOWNLOADED_FILE_DIR=/tmp
 # disable deprecations and other warnings in output
 ENV RUBYOPT="-W0"
 ENV DATABASE_URL=postgres://app:p4ssw0rd@127.0.0.1/app
-
-
-RUN gem install bundler --version "$BUNDLER_VERSION" --no-document
 
 # Plugin specific
 COPY Gemfile.plugins /app/
