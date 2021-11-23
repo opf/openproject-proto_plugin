@@ -63,7 +63,7 @@ jobs:
         run: |
           docker-compose -f docker/ci/docker-compose.yml down --remove-orphans -t 10
           sudo chown -R $(whoami):$(id -ng) $CI_CACHE_PATH
- rspec-features:
+  rspec-features:
     name: rspec features tests
     runs-on: ubuntu-latest
     timeout-minutes: 60
