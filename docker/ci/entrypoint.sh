@@ -56,19 +56,45 @@ if [ "$1" == "setup-tests" ]; then
 	execute "time bundle exec rake parallel:create parallel:load_schema"
 fi
 
-if [ "$1" == "run-units" ]; then
+if [ "$1" == "run-angular-unit" ]; then
 	shift
-	execute "cd frontend && npm install && npm run test -- --include=src/app/features/plugins/linked/${PLUGIN_FOLDER_NAME}"
+	if ! execute "cd frontend && npm install && npm run test -- --include=src/app/features/plugins/linked/${PLUGIN_FOLDER_NAME}"; then
+		cleanup
+		exit 1
+	else
+		cleanup
+		exit 0
+	fi
 fi
 
-if [ "$1" == "run-rspec" ]; then 
+if [ "$1" == "run-rspec-unit" ]; then 
 	shift
 	execute "rm -rf tmp/op-core spec"
 	execute "git clone --depth 1 https://github.com/opf/openproject.git tmp/op-core"
 	echo "moving spec folder"
 	execute "mv tmp/op-core/spec ./"
 	echo "running rspec tests"
-	execute "time bundle exec rspec ../plugin"
+	
+	if ! execute "time bundle exec rspec --exclude-pattern '/plugin/spec/features/**/*' /plugin/spec/**/*_spec.rb"; then
+		execute "cat tmp/parallel_summary.log"
+		cleanup
+		exit 1
+	else
+		cleanup
+		exit 0
+	fi
+fi
+
+if [ "$1" == "run-rspec-features"]; then 
+	shift
+	if ! execute "time bundle exec rspec /plugin/spec/features/**/*_spec.rb" ; then
+		execute "cat tmp/parallel_summary.log"
+		cleanup
+		exit 1
+	else
+		cleanup
+		exit 0
+	fi
 fi
 
 if [ "$1" == "run-frontend-lint" ]; then
