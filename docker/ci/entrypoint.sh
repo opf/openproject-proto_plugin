@@ -86,7 +86,7 @@ if [ "$1" == "run-rspec-unit" ]; then
 	fi
 fi
 
-if [ "$1" == "run-rspec-features"]; then 
+if [ "$1" == "run-rspec-features" ]; then 
 	shift
 	execute "rm -rf tmp/op-core spec"
 	execute "git clone --depth 1 https://github.com/opf/openproject.git tmp/op-core"
