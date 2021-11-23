@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+PLUGIN_FOLDER_NAME="openproject-proto_plugin"
 export PGBIN="/usr/lib/postgresql/$PGVERSION/bin"
 export JOBS="${CI_JOBS:=$(nproc)}"
 # for parallel rspec
@@ -57,7 +58,7 @@ fi
 
 if [ "$1" == "run-units" ]; then
 	shift
-	execute "cd frontend && npm install && npm run test"
+	execute "cd frontend && npm install && npm run test -- --include=src/app/features/plugins/linked/${PLUGIN_FOLDER_NAME}"
 	execute "time bundle exec rspec -I spec_legacy spec_legacy"
 	if ! execute "time bundle exec rspec --exclude-pattern '/plugin/spec/features/**/*' /plugin/spec/**/*_spec.rb"; then
 		execute "cat tmp/parallel_summary.log"
