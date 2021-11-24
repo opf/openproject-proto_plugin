@@ -51,6 +51,7 @@ if [ "$1" == "setup-tests" ]; then
 		chmod 1777 "$folder"
 	done
 
+	execute "chown -hR dev /usr/local/bundle"
 	execute "time bundle install -j$JOBS"
 	execute "chown -hR dev /usr/local/bundle"
 	execute "TEST_ENV_NUMBER=0 time bundle exec rake db:create db:migrate db:schema:dump webdrivers:chromedriver:update webdrivers:geckodriver:update openproject:plugins:register_frontend"
