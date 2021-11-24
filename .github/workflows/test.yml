@@ -2,9 +2,11 @@ name: test
 on: push
 
 jobs:
-  test-reusable-angular-workflow:
+  angular-unit-tests:
     uses: bitcrowd/openproject-proto_plugin/.github/workflows/angular-unit-tests.yml@docker
-  test-reusable-rspec-unit-workflow:
+    with:
+      plugin_name: openproject-proto_plugin
+  rspec-unit-tests:
     uses: bitcrowd/openproject-proto_plugin/.github/workflows/rspec-unit-tests.yml@docker
-  test-reusable-rspec-features-workflow:
+  rspec-features-tests:
     uses: bitcrowd/openproject-proto_plugin/.github/workflows/rspec-features-tests.yml@docker

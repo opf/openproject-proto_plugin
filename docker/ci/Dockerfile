@@ -1,10 +1,11 @@
 FROM ruby:2.7.4-buster
-MAINTAINER operations@openproject.com
+LABEL org.openproject.image.authors="operations@openproject.com" 
+
+ARG OPENPROJECT_BRANCH=v12.0.1
 
 ENV NODE_VERSION="14.17.0"
 ENV CHROME_SOURCE_URL="https://dl.google.com/dl/linux/direct/google-chrome-stable_current_amd64.deb https://openproject-public.s3.eu-central-1.amazonaws.com/binaries/google-chrome-stable_current_amd64.deb"
 ENV USER=dev
-ENV OPENPROJECT_BRANCH=v12.0.1
 
 RUN useradd -d /home/$USER -m $USER -s /bin/bash
 WORKDIR /home/$USER
@@ -42,17 +43,16 @@ RUN gem install bundler --version "$BUNDLER_VERSION" --no-document
 
 RUN git clone --depth 1 --branch "$OPENPROJECT_BRANCH" https://github.com/opf/openproject.git /home/$USER/openproject
 
-COPY ./entrypoint.sh /usr/sbin/entrypoint.sh
-
 # Plugin specific
-COPY Gemfile.plugins /home/$USER/openproject
-
+ARG PLUGIN_NAME
+RUN echo "group :opf_plugins do\n\tgem '$PLUGIN_NAME', path: '~/plugin'\nend" > /home/$USER/openproject/Gemfile.plugins
 VOLUME [ "/usr/local/bundle", "/home/$USER/plugin", "/home/$USER/openproject/tmp" ]
 
 RUN chown -hR dev /home/$USER
 
 WORKDIR /home/$USER/openproject
 
+COPY ./entrypoint.sh /usr/sbin/entrypoint.sh
 ENTRYPOINT [ "/usr/sbin/entrypoint.sh" ]
 CMD ["setup-tests", "bash"]
 

@@ -82,6 +82,8 @@ fi
 
 if [ "$1" == "run-rspec-features" ]; then
 	shift
+	execute "npm run postinstall"
+	
 	if ! execute "time bundle exec rspec --pattern '../plugin/spec/features/**/*_spec.rb'" ; then
 		execute "cat tmp/parallel_summary.log"
 		cleanup

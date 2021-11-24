@@ -1,3 +1,0 @@
-group :opf_plugins do
-  gem "openproject-proto_plugin", path: "~/plugin"
-end

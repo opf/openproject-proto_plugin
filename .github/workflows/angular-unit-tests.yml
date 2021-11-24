@@ -2,6 +2,10 @@ name: Angular Unit Test Workflow
 
 on:
   workflow_call:
+    inputs:
+      plugin_name:
+        type: string
+        required: true
 
 jobs:
   angular-unit:
@@ -11,6 +15,7 @@ jobs:
       CI_CACHE_PATH: "/tmp/cache"
       CI_RETRY_COUNT: 3
       LOCAL_DEV_CHECK: 1
+      PLUGIN_NAME: ${{ inputs.plugin_name }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14.x
@@ -27,6 +32,7 @@ jobs:
             ${{ runner.os }}-core-tests-
       - name: build
         run: |
+          docker-compose --version
           docker-compose -f docker/ci/docker-compose.yml build --pull ci
       - name: test
         run: |
