@@ -2,6 +2,7 @@ FROM ruby:2.7.4-buster
 LABEL org.openproject.image.authors="operations@openproject.com" 
 
 ARG OPENPROJECT_BRANCH=v12.0.1
+ARG PLUGIN_NAME
 
 ENV NODE_VERSION="14.17.0"
 ENV CHROME_SOURCE_URL="https://dl.google.com/dl/linux/direct/google-chrome-stable_current_amd64.deb https://openproject-public.s3.eu-central-1.amazonaws.com/binaries/google-chrome-stable_current_amd64.deb"
@@ -44,7 +45,6 @@ RUN gem install bundler --version "$BUNDLER_VERSION" --no-document
 RUN git clone --depth 1 --branch "$OPENPROJECT_BRANCH" https://github.com/opf/openproject.git /home/$USER/openproject
 
 # Plugin specific
-ARG PLUGIN_NAME
 RUN echo "group :opf_plugins do\n\tgem '$PLUGIN_NAME', path: '~/plugin'\nend" > /home/$USER/openproject/Gemfile.plugins
 VOLUME [ "/usr/local/bundle", "/home/$USER/plugin", "/home/$USER/openproject/tmp" ]
 

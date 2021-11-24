@@ -9,7 +9,7 @@ services:
       context: ./
       dockerfile: Dockerfile
       args:
-        PLUGIN_NAME: ${PLUGIN_NAME:-TESTING}
+        PLUGIN_NAME: ${PLUGIN_NAME}
     environment:
       RSPEC_RETRY_RETRY_COUNT: "${CI_RETRY_COUNT:-3}"
       JOBS: "${CI_JOBS:-8}"
