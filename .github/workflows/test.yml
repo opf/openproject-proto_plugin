@@ -1,18 +1,16 @@
 name: test
 on: push
 
-plugin_name: &plugin_name openproject-proto_plugin
-
 jobs:
   angular-unit-tests:
     uses: bitcrowd/openproject-plugin_test_action/.github/workflows/angular-unit-tests.yml@main
     with:
-      plugin_name: *plugin_name
+      plugin_name: openproject-proto_plugin
   rspec-unit-tests:
     uses: bitcrowd/openproject-plugin_test_action/.github/workflows/rspec-unit-tests.yml@main
     with:
-      plugin_name: *plugin_name
+      plugin_name: openproject-proto_plugin
   rspec-features-tests:
     uses: bitcrowd/openproject-plugin_test_action/.github/workflows/rspec-features-tests.yml@main
     with:
-      plugin_name: *plugin_name
+      plugin_name: openproject-proto_plugin
