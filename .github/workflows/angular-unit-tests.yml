@@ -1,0 +1,38 @@
+name: Angular Unit Test Workflow
+
+on:
+  workflow_call:
+
+jobs:
+  angular-unit:
+    name: angular unit tests
+    runs-on: ubuntu-latest
+    env:
+      CI_CACHE_PATH: "/tmp/cache"
+      CI_RETRY_COUNT: 3
+      LOCAL_DEV_CHECK: 1
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/cache
+          key: ${{ runner.os }}-core-tests-units-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-core-tests-units-
+            ${{ runner.os }}-core-tests-
+      - name: build
+        run: |
+          docker-compose -f docker/ci/docker-compose.yml build --pull ci
+      - name: test
+        run: |
+          docker-compose -f docker/ci/docker-compose.yml run ci setup-tests run-angular-unit
+      - name: cleanup
+        if: ${{ always() }}
+        run: |
+          docker-compose -f docker/ci/docker-compose.yml down --remove-orphans -t 10
+          sudo chown -R $(whoami):$(id -ng) $CI_CACHE_PATH

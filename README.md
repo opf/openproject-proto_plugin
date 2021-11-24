@@ -4,21 +4,19 @@ In this plugin we try to give you an idea on how to write an OpenProject plugin.
 
 To get started quickly you may just copy this plugin, remove the bits you don't need and modify/add the features you want.
 
-
 ## Pre-requisites
 
 In order to be able to continue, you will first have to have the following items installed:
 
-* Ruby >= 2.6
-* Ruby on Rails 6.x
-* Node LTS (currently 10.12), npm 6.x and bundle 2.x
+- Ruby >= 2.6
+- Ruby on Rails 6.x
+- Node LTS (currently 10.12), npm 6.x and bundle 2.x
 
 We are assuming that you understand how to develop Ruby on Rails applications and are familiar with controllers, views, asset management, hooks and engines.
 
 To get started with a development environment of the OpenProject core, we recommend you follow our development guides at https://docs.openproject.org/development/
 
 The frontend can be written using plain-vanilla JavaScript, but if you choose to integrate directly with the OpenProject frontend then you will have to understand the Angular framework.
-
 
 ## Getting started
 
@@ -131,7 +129,7 @@ Great, we're on our way.
 
 The relevant files for the specs are:
 
-* `spec/controllers/kittens_controller_spec.rb`
+- `spec/controllers/kittens_controller_spec.rb`
 
 You have to run the specs from within the core. For instance:
 
@@ -146,11 +144,16 @@ A special `.travis.yml` and `Gemfile.plugins` are included which allow you to ha
 the specs for your plugin along with the core specs. This is a good way to test if your plugin
 works properly in conjunction with the core.
 
+**Docker CI**
+A `docker/ci` folder exists to automate the testing of both angular unit and rspec unit/features. Additionally, a `lint.yml` and `test.yml` file exists in .github/workflows to use Github Actions.
+
+For more documentation, see `docker/ci/DOCKER.MD`.
+
 ## Seeders
 
 The relevant files for the seeders are:
 
-* `app/seeders/kittens_seeder.rb` - Creates example records.
+- `app/seeders/kittens_seeder.rb` - Creates example records.
 
 You can define so called "Seeders" for your plugin which get called when `rake db:seed` is run in the core. For example:
 
@@ -168,9 +171,9 @@ They will be discovered and invoked by the core automatically.
 
 The relevant files for the models are:
 
-* `app/models/kitten.rb` - the code for the model where you can add validations etc.
-* `app/models/application_record.rb` - auto-generated base record
-* `db/migrate/20170116125942_create_kittens.rb` - database migration
+- `app/models/kitten.rb` - the code for the model where you can add validations etc.
+- `app/models/application_record.rb` - auto-generated base record
+- `db/migrate/20170116125942_create_kittens.rb` - database migration
 
 The models work as usual in Rails applications. For the sake of completeness, the model validates the name attribute:
 
@@ -184,8 +187,8 @@ end
 
 The relevant files for the controllers are:
 
-* `app/controllers/kittens_controller.rb` - main controller with `:index` entry point
-* `app/views/kittens/index.html.erb` - main template for kittens index view
+- `app/controllers/kittens_controller.rb` - main controller with `:index` entry point
+- `app/views/kittens/index.html.erb` - main template for kittens index view
 
 The controllers work as expected for Rails applications. In preparation for the following example, we create a basic minimal controller which only supports creation of new kittens:
 
@@ -248,11 +251,11 @@ We leave it up as an exercise for the reader to complete the CRUD with edit and 
 
 The relevant files for the assets are:
 
-* `lib/open_project/proto_plugin/engine.rb` - assets statement at the end of the engine.
-* `lib/open_project/proto_plugin/hooks.rb` - the JavaScript and Stylesheet are included here.
-* `app/assets/javascripts/proto_plugin/main.js` - main entry point for plain JavaScript and document ready hook.
-* `app/assets/stylesheets/proto_plugin/main.scss` - good ol' Sass stuff.
-* `app/assets/images/kitty.png` - a nice kitty image.
+- `lib/open_project/proto_plugin/engine.rb` - assets statement at the end of the engine.
+- `lib/open_project/proto_plugin/hooks.rb` - the JavaScript and Stylesheet are included here.
+- `app/assets/javascripts/proto_plugin/main.js` - main entry point for plain JavaScript and document ready hook.
+- `app/assets/stylesheets/proto_plugin/main.scss` - good ol' Sass stuff.
+- `app/assets/images/kitty.png` - a nice kitty image.
 
 Any additional assets you want to use have to be registered for pre-compilation in the engine like this:
 
@@ -262,13 +265,11 @@ assets %w(proto_plugin/main.css proto_plugin/main.js kitty.png)
 
 You don't technically have to put the assets into a subfolder with the same name as your plugin. But it's highly recommended to do so in order to avoid naming conflicts. For example, if the image `kitty.png` is not scoped, it might conflict with the core if it were also to include another asset named `kitty.png` too.
 
-
 ## Angular frontend
 
 The plugin can create its own Angular module and also hook into parts of the core frontend. The relevant files for the frontend are:
 
-* `frontend/app/module/main.ts`
-
+- `frontend/app/module/main.ts`
 
 This file defines the Angular module for this plugin that gets linked into core `frontend/app/src/modules/plugins/linked`
 
@@ -285,8 +286,8 @@ This will compile and output all changes on the fly as you change it using the A
 
 The relevant files for the menu items are:
 
-* `lib/open_project/proto_plugin/engine.rb` - register block in the beginning
-* `app/controllers/kittens_controller.rb`
+- `lib/open_project/proto_plugin/engine.rb` - register block in the beginning
+- `app/controllers/kittens_controller.rb`
 
 Registering new user-defined menu items is easy. For instance, let's assume that you want to add a new item to the project menu. Just add the following to the `engine.rb` file:
 
@@ -315,13 +316,12 @@ You can add nested menu items by passing a `parent` option to the following item
 
 There are a number of menus available from which to choose:
 
-* top_menu
-* account_menu
-* application_menu
-* my_menu
-* admin_menu
-* project_menu
-
+- top_menu
+- account_menu
+- application_menu
+- my_menu
+- admin_menu
+- project_menu
 
 ## Homescreen Blocks
 
@@ -331,8 +331,8 @@ You can easily add your own user-defined block so that it will also appears on t
 
 The relevant files for homescreen blocks are:
 
-* `lib/open_project/proto_plugin/engine.rb` - `proto_plugin.homescreen_blocks` initializer
-* `app/views/homescreen/blocks/_homescreen_block.html.erb`
+- `lib/open_project/proto_plugin/engine.rb` - `proto_plugin.homescreen_blocks` initializer
+- `app/views/homescreen/blocks/_homescreen_block.html.erb`
 
 In the file `engine.rb` you can register additional blocks in OpenProject's homescreen like this:
 
@@ -354,12 +354,11 @@ This is what you should now see on the homepage:
 
 ![](images/kitten-homescreen-block.png?raw=true)
 
-
 ## OpenProject::Notification listeners
 
 The relevant files for notification listeners are:
 
-* `lib/open_project/proto_plugin/engine.rb` - `proto_plugin.notifications` initializer
+- `lib/open_project/proto_plugin/engine.rb` - `proto_plugin.notifications` initializer
 
 Although OpenProject has inherited hooks (see next section) from Redmine, it also employs its own mechanism for simple event callbacks. Their return values are ignored.
 
@@ -375,39 +374,36 @@ initializer 'proto_plugin.notifications' do
 end
 ```
 
-
 ### Events
 
 Currently the supported events (_block parameters in parenthesis_) to which you can subscribe are:
 
-* user_invited (token)
-* user_reinvited (token)
-* project_updated (project)
-* project_renamed (project)
-* project_deletion_imminent (project)
-* member_updated (member)
-* member_removed (member)
-* journal_created (payload)
-* watcher_added (payload)
-
+- user_invited (token)
+- user_reinvited (token)
+- project_updated (project)
+- project_renamed (project)
+- project_deletion_imminent (project)
+- member_updated (member)
+- member_removed (member)
+- journal_created (payload)
+- watcher_added (payload)
 
 ### Setting Events
 
 Whenever a given setting changes, an event is triggered passing the previous and new values. For instance:
 
-* `setting.host_name.changed` (value, old_value)
+- `setting.host_name.changed` (value, old_value)
 
 Where `host_name` is the name of the setting. You can find out all setting names simply by inspecting the relevant setting input field in the admin area in your browser or by listing them all on the rails console through `Setting.pluck(:name)`. Also have a look at `config/settings.yml` where all the default values for settings are defined by their name.
-
 
 ## Hooks
 
 The relevant files for hooks are:
 
-* `lib/open_project/engine.rb` - `proto_plugin.register_hooks` initializer
-* `lib/open_project/hooks.rb`
-* `app/views/hooks/proto_plugin/_homescreen_after_links.html.erb`
-* `app/views/hooks/proto_plugin/_view_layouts_base_sidebar.html.erb`
+- `lib/open_project/engine.rb` - `proto_plugin.register_hooks` initializer
+- `lib/open_project/hooks.rb`
+- `app/views/hooks/proto_plugin/_homescreen_after_links.html.erb`
+- `app/views/hooks/proto_plugin/_view_layouts_base_sidebar.html.erb`
 
 Hooks can be used to extend views, controllers and models at certain predefined places. Each hook has a name for which a method has to be defined in your hook class, see `lib/open_project/proto_plugin/hooks.rb` for more details.
 
@@ -421,11 +417,10 @@ By using `render_on`, the given variables are made available as locals to the pa
 
 Additionally the following context information is put into context if available:
 
-* project - current project
-* request - Request instance
-* controller - current Controller instance
-* hook_caller - object that called the hook
-
+- project - current project
+- request - Request instance
+- controller - current Controller instance
+- hook_caller - object that called the hook
 
 ### View Hooks
 
@@ -433,57 +428,55 @@ _Note: context variables placed within (parenthesis)_
 
 Hooks in the base template:
 
-* :view_layouts_base_html_head
-* :view_layouts_base_sidebar
-* :view_layouts_base_breadcrumb
-* :view_layouts_base_content
-* :view_layouts_base_body_bottom
+- :view_layouts_base_html_head
+- :view_layouts_base_sidebar
+- :view_layouts_base_breadcrumb
+- :view_layouts_base_content
+- :view_layouts_base_body_bottom
 
 More hooks:
 
-* :view_account_login_auth_provider
-* :view_account_login_top
-* :view_account_login_bottom
-* :view_account_register_after_basic_information (f) - f being a form helper
-* :activity_index_head
-* :view_admin_info_top
-* :view_admin_info_bottom
-* :view_common_error_details (params, project)
-* :homescreen_administration_links
-* :view_work_package_overview_attributes
+- :view_account_login_auth_provider
+- :view_account_login_top
+- :view_account_login_bottom
+- :view_account_register_after_basic_information (f) - f being a form helper
+- :activity_index_head
+- :view_admin_info_top
+- :view_admin_info_bottom
+- :view_common_error_details (params, project)
+- :homescreen_administration_links
+- :view_work_package_overview_attributes
 
 Custom field form hooks:
 
-* :view_custom_fields_form_upper_box (custom_field, form)
-* :view_custom_fields_form_work_package_custom_field (custom_field, form)
-* :view_custom_fields_form_user_custom_field (custom_field, form)
-* :view_custom_fields_form_group_custom_field (custom_field, form)
-* :view_custom_fields_form_project_custom_field (custom_field, form)
-* :view_custom_fields_form_time_entry_activity_custom_field (custom_field, form)
-* :view_custom_fields_form_version_custom_field (custom_field, form)
-* :view_custom_fields_form_issue_priority_custom_field (custom_field, form)
-
+- :view_custom_fields_form_upper_box (custom_field, form)
+- :view_custom_fields_form_work_package_custom_field (custom_field, form)
+- :view_custom_fields_form_user_custom_field (custom_field, form)
+- :view_custom_fields_form_group_custom_field (custom_field, form)
+- :view_custom_fields_form_project_custom_field (custom_field, form)
+- :view_custom_fields_form_time_entry_activity_custom_field (custom_field, form)
+- :view_custom_fields_form_version_custom_field (custom_field, form)
+- :view_custom_fields_form_issue_priority_custom_field (custom_field, form)
 
 ### Controller Hooks
 
 _Note: context variables placed within (parenthesis)_
 
-* :controller_account_success_authentication_after (user)
-* :controller_custom_fields_new_after_save (custom_field)
-* :controller_custom_fields_new_after_save (custom_field)
-* :controller_messages_new_after_save (params, message)
-* :controller_messages_reply_after_save (params, message)
-* :controller_timelog_available_criterias (available_criterias, project)
-* :controller_timelog_time_report_joins (sql)
-* :controller_timelog_edit_before_save (params, time_entry)
-* :controller_wiki_edit_after_save (params, page)
-* :controller_work_packages_bulk_edit_before_save (params, work_package)
-* :controller_work_packages_move_before_save (params, work_package, target_project, copy)
-
+- :controller_account_success_authentication_after (user)
+- :controller_custom_fields_new_after_save (custom_field)
+- :controller_custom_fields_new_after_save (custom_field)
+- :controller_messages_new_after_save (params, message)
+- :controller_messages_reply_after_save (params, message)
+- :controller_timelog_available_criterias (available_criterias, project)
+- :controller_timelog_time_report_joins (sql)
+- :controller_timelog_edit_before_save (params, time_entry)
+- :controller_wiki_edit_after_save (params, page)
+- :controller_work_packages_bulk_edit_before_save (params, work_package)
+- :controller_work_packages_move_before_save (params, work_package, target_project, copy)
 
 ### More Hooks
 
 _Note: context variables placed within (parenthesis)_
 
-* :model_changeset_scan_commit_for_issue_ids_pre_issue_update (changeset, issue)
-* :copy_project_add_member (new_member, member)
+- :model_changeset_scan_commit_for_issue_ids_pre_issue_update (changeset, issue)
+- :copy_project_add_member (new_member, member)
