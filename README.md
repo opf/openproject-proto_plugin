@@ -145,6 +145,7 @@ the specs for your plugin along with the core specs. This is a good way to test 
 works properly in conjunction with the core.
 
 **Docker CI**
+
 A `docker/ci` folder exists to automate the testing of both angular unit and rspec unit/features. Additionally, a `lint.yml` and `test.yml` file exists in .github/workflows to use Github Actions.
 
 For more documentation, see `docker/ci/DOCKER.MD`.
