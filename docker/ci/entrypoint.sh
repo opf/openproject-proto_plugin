@@ -18,7 +18,6 @@ if [ $(id -u) -eq 0 ]; then
 	mkdir -p /usr/local/bundle
 	mkdir -p /home/$USER/openproject/frontend/node_modules
 	mkdir -p /home/$USER/openproject/tmp
-	chown $USER:$USER /usr/local/bundle
 	chown $USER:$USER /home/$USER/openproject/frontend/node_modules
 	chown $USER:$USER /home/$USER/openproject/tmp
 fi
@@ -51,9 +50,9 @@ if [ "$1" == "setup-tests" ]; then
 		chmod 1777 "$folder"
 	done
 
-	execute "chown -hR dev /usr/local/bundle"
+	chown -hR dev /usr/local/bundle
 	execute "time bundle install -j$JOBS"
-	execute "chown -hR dev /usr/local/bundle"
+	chown -hR dev /usr/local/bundle
 	execute "TEST_ENV_NUMBER=0 time bundle exec rake db:create db:migrate db:schema:dump webdrivers:chromedriver:update webdrivers:geckodriver:update openproject:plugins:register_frontend"
 	execute "time bundle exec rake parallel:create parallel:load_schema"
 fi
