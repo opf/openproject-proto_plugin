@@ -38,8 +38,6 @@ ENV RUBYOPT="-W0"
 ENV DATABASE_URL=postgres://app:p4ssw0rd@127.0.0.1/app
 ENV PGVERSION=9.6
 
-USER $USER
-
 RUN gem install bundler --version "$BUNDLER_VERSION" --no-document
 
 RUN git clone --depth 1 --branch "$OPENPROJECT_BRANCH" https://github.com/opf/openproject.git /home/$USER/openproject
@@ -51,9 +49,10 @@ COPY Gemfile.plugins /home/$USER/openproject
 
 VOLUME [ "/usr/local/bundle", "/home/$USER/plugin", "/home/$USER/openproject/tmp" ]
 
+RUN chown -hR dev /home/$USER
+
 WORKDIR /home/$USER/openproject
 
-USER root
 ENTRYPOINT [ "/usr/sbin/entrypoint.sh" ]
 CMD ["setup-tests", "bash"]
 
