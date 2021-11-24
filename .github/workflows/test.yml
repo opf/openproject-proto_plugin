@@ -2,15 +2,27 @@ name: test
 on: push
 
 jobs:
-  angular-unit-tests:
-    uses: bitcrowd/openproject-plugin_test_action/.github/workflows/angular-unit-tests.yml@main
-    with:
-      plugin_name: openproject-proto_plugin
+  # angular-unit-tests:
+  #   uses: bitcrowd/openproject-plugin_test_action/.github/workflows/angular-unit-tests.yml@main
+  #   with:
+  #     plugin_name: openproject-proto_plugin
   rspec-unit-tests:
-    uses: bitcrowd/openproject-plugin_test_action/.github/workflows/rspec-unit-tests.yml@main
-    with:
-      plugin_name: openproject-proto_plugin
-  rspec-features-tests:
-    uses: bitcrowd/openproject-plugin_test_action/.github/workflows/rspec-features-tests.yml@main
-    with:
-      plugin_name: openproject-proto_plugin
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v2
+      - name: cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/cache
+          key: ${{ runner.os }}-core-tests-units-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-core-tests-units-
+            ${{ runner.os }}-core-tests-
+      - name: test
+        uses: tessi/openproject-plugin_tests@main
+        with:
+          plugin_name: openproject-proto_plugin
+  # rspec-features-tests:
+  #   uses: bitcrowd/openproject-plugin_test_action/.github/workflows/rspec-features-tests.yml@main
+  #   with:
+  #     plugin_name: openproject-proto_plugin
