@@ -50,7 +50,6 @@ COPY Gemfile.plugins /home/$USER/openproject
 VOLUME [ "/usr/local/bundle", "/home/$USER/plugin", "/home/$USER/openproject/tmp" ]
 
 RUN chown -hR dev /home/$USER
-RUN chown -hR dev /usr/local/bundle
 
 WORKDIR /home/$USER/openproject
 
