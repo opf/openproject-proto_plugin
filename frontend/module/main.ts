@@ -44,8 +44,23 @@ import './global_scripts'
 import {KITTEN_ROUTES} from 'core-app/features/plugins/linked/openproject-proto_plugin/kitten.routes';
 import {UIRouterModule} from '@uirouter/angular';
 import {KittenPageComponent} from 'core-app/features/plugins/linked/openproject-proto_plugin/kitten-page/kitten-page.component';
+import { OpenProjectPluginContext } from '../../plugin-context';
 
 export function initializeProtoPlugin(injector:Injector) {
+  window.OpenProject.getPluginContext().then((pluginContext:OpenProjectPluginContext) => {
+
+    pluginContext.hooks.workPackageTableContextMenu((params:any) => ({
+      key: 'create_kittens',
+      icon: 'icon-projects',
+      link: 'createKittens',
+      indexBy(actions:any) {
+        const index = _.findIndex(actions, { link: 'logTime' });
+        return index !== -1 ? index + 1 : actions.length;
+      },
+      text: I18n.t('js.button_create_kittens'),
+    }));
+  });
+
   return () => {
     const hookService = injector.get(HookService);
 
@@ -60,21 +75,22 @@ export function initializeProtoPlugin(injector:Injector) {
   };
 }
 
+
 @NgModule({
   imports: [
     CommonModule,
     UIRouterModule.forChild({ states: KITTEN_ROUTES })
   ],
-  providers: [
-    // This initializer gets called when the Angular frontend is being loaded by the core
-    // use it to hook up global listeners or bootstrap components
-    { provide: APP_INITIALIZER, useFactory: initializeProtoPlugin, deps: [Injector], multi: true },
-  ],
+  providers: [],
   declarations: [
     // Declare the component for angular to use
     KittenComponent,
     KittenPageComponent,
   ],
 })
+
 export class PluginModule {
+  constructor(injector:Injector) {
+    initializeProtoPlugin(injector);
+  }
 }

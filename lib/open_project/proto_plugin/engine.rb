@@ -49,6 +49,21 @@ module OpenProject::ProtoPlugin
            caption: "Kittens Frontend"
     end
 
+    extend_api_response(:v3, :work_packages, :work_package) do
+      include Redmine::I18n
+
+      # To understand how plugins are created check https://github.com/opf/openproject/blob/dev/frontend/doc/PLUGINS.md
+      link :createKittens do
+        next unless represented.persisted?
+
+        {
+          href: angular_kittens_path,
+          type: 'text/html',
+          title: "Create kitten for #{represented.subject}"
+        }
+      end
+    end
+
     initializer 'proto_plugin.register_hooks' do
       require 'open_project/proto_plugin/hooks'
     end
