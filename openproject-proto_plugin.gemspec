@@ -14,6 +14,4 @@ Gem::Specification.new do |s|
   s.license     = "GPLv3"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + %w(CHANGELOG.md README.md)
-
-  s.add_dependency "rails", "~> 6.0"
 end
