@@ -47,6 +47,7 @@ import { KittenComponent } from 'core-app/features/plugins/linked/openproject-pr
 import { CommonModule } from '@angular/common';
 import { KITTEN_ROUTES } from 'core-app/features/plugins/linked/openproject-proto_plugin/kitten.routes';
 import { KittenPageComponent } from 'core-app/features/plugins/linked/openproject-proto_plugin/kitten-page/kitten-page.component';
+import { kittenAction } from 'core-app/features/plugins/linked/openproject-proto_plugin/context-menu';
 
 export function initializeProtoPlugin(injector:Injector) {
   return () => {
@@ -60,6 +61,10 @@ export function initializeProtoPlugin(injector:Injector) {
         { selector: 'kitten-component', cls: KittenComponent },
       ];
     });
+
+    // Register action menu
+    hookService.register('workPackageSingleContextMenu', () => kittenAction);
+    hookService.register('workPackageTableContextMenu', () => kittenAction);
   };
 }
 

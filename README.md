@@ -46,7 +46,7 @@ Once you've done that, **in the OpenProject core directory**, run:
 $ bundle install
 $ bundle exec rails db:migrate # creates the models from the plugin
 $ bundle exec rails db:seed # creates default data from the plugin's seeder (`app/seeders`)
-$ bundle exec rails assets:webpack
+$ bundle exec rails assets:angular
 ```
 
 Start the server using:
@@ -62,6 +62,9 @@ In order to verify that the plugin has been installed correctly, go to the Admin
 In the following sections we will explain some common features that you may want to use in your own plugin. This plugin has already been setup with the basic framework to illustrate all these features.
 
 Each section will list the relevant files you may want to look at and explain the features. Beyond that there are also code comments in the respective files which provide further details.
+
+### Plugin Path in the OpenProject core App
+JS files in `/frontend` import other modules in the core app with the `core-app/` prefix which is an alias pointing to `<core-app-root>/frontend/src/app` defined in the `tsconfig.base.json` file, be careful to update import path when configurations change.
 
 ### Rails generators
 
@@ -265,7 +268,6 @@ The plugin can create its own Angular module and also hook into parts of the cor
 
 * `frontend/app/module/main.ts`
 
-  
 
 This file defines the Angular module for this plugin that gets linked into core `frontend/app/src/modules/plugins/linked`
 
