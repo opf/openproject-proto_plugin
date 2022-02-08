@@ -7,22 +7,22 @@ To get started quickly you may just copy this plugin, remove the bits you don't 
 
 ## Pre-requisites
 
-In order to be able to continue, you will first have to have the following items installed:
+In order to be able to continue, you will first have to have a working OpenProject core development environment. Please follow these guides to set that up:
 
-* Ruby >= 2.6
-* Ruby on Rails 6.x
-* Node LTS (currently 10.12), npm 6.x and bundle 2.x
+* [Development environment Ubuntu/Debian](https://www.openproject.org/docs/development/development-environment-ubuntu/)
+* [Development environment Mac OS X](https://www.openproject.org/docs/development/development-environment-osx/)
+* [Development environment Docker](https://www.openproject.org/docs/development/development-environment-docker/)
 
 We are assuming that you understand how to develop Ruby on Rails applications and are familiar with controllers, views, asset management, hooks and engines.
 
-To get started with a development environment of the OpenProject core, we recommend you follow our development guides at https://docs.openproject.org/development/
+To get started with a development environment of the OpenProject core, we recommend you follow our development guides at https://docs.openproject.org/development/ as well as the [guide for plugin development](https://www.openproject.org/docs/development/create-openproject-plugin).
 
 The frontend can be written using plain-vanilla JavaScript, but if you choose to integrate directly with the OpenProject frontend then you will have to understand the Angular framework.
 
 
 ## Getting started
 
-To include this plugin, you need to create a file called `Gemfile.plugins` in your OpenProject directory with the following contents:
+To include this plugin, you need to create a file called `Gemfile.plugins` in your OpenProject core directory with the following contents:
 
 ```
 group :opf_plugins do
@@ -30,7 +30,7 @@ group :opf_plugins do
 end
 ```
 
-As you may want to play around with and modify the plugin locally, you may want to check it out and use the following instead:
+As you may want to play around with and modify the plugin locally, you may want to check it out first and use the following instead to reference a local path:
 
 ```
 group :opf_plugins do
@@ -40,22 +40,39 @@ end
 
 If you already have a `Gemfile.plugins` just add the line "gem" line to it inside the `:opf_plugins` group.
 
-Once you've done that, **in the OpenProject core directory**, run:
+Once you've done that, **switch to the OpenProject core directory** and run:
 
-```
-$ bundle install
-$ bundle exec rails db:migrate # creates the models from the plugin
-$ bundle exec rails db:seed # creates default data from the plugin's seeder (`app/seeders`)
-$ bundle exec rails assets:angular
+```bash
+./bin/setup_dev
 ```
 
-Start the server using:
+While you're in the root of the OpenProject core, we recommend you export the OpenProject core path as `$OPENPROJECT_ROOT`.
 
-```
-$ bundle exec foreman -f Procfile.dev
+```bash
+export OPENPROJECT_ROOT=$(pwd)
 ```
 
-In order to verify that the plugin has been installed correctly, go to the Administration Plugins Page at `/admin/plugins` and you should be able to find your plugin in the list.
+This will make the plugin known to the OpenProject core with bundler and optionally link a frontend directory into the core (more on that later).
+
+Optionally, you might want to run plugin seeds, if there are any:
+
+```bash
+bundle exec rails db:seed # creates default data from the plugin's seeder (`app/seeders`)
+```
+
+You can then start the core server as described in the above guides. For example, you can then start the rails server with:
+
+```bash
+RAILS_ENV=development ./bin/rails server
+```
+
+As well as the Angular CLI in development mode with:
+
+```bash
+RAILS_ENV=development npm run serve
+```
+
+In order to verify that the plugin has been installed correctly, go to the Administration Plugins Page at http://localhost:3000/admin/plugins and you should be able to find your plugin in the list.
 
 ![](images/admin-plugins-page.png?raw=true)
 
@@ -63,8 +80,14 @@ In the following sections we will explain some common features that you may want
 
 Each section will list the relevant files you may want to look at and explain the features. Beyond that there are also code comments in the respective files which provide further details.
 
-### Plugin Path in the OpenProject core App
-JS files in `/frontend` import other modules in the core app with the `core-app/` prefix which is an alias pointing to `<core-app-root>/frontend/src/app` defined in the `tsconfig.base.json` file, be careful to update import path when configurations change.
+### Frontend linking
+This proto plugin contains an Angular frontend part. The way the Angular CLI works, it needs to build the project from a common root folder. That is located at `$OPENPROJECT_ROOT/frontend`.
+
+To make your plugin's frontend available to the OpenProject core, it is being symlinked into `$OPENPROJECT_CORE/frontend/src/app/features/plugins/linked/your-plugin-name`. This is being done by the `bin/setup_dev` script, which needs to run whenever you add or remove a plugin from your Gemfile.
+
+Working with this symlinked frontend is a bit tricky. What we recommend is that you develop your Ruby backend in the plugin folder, while you develop the Angular frontend in the OpenProject core. This way, you will get all benefits from the CLI and language services such as auto-completion, angular generations, correct paths being looked up by Typescript, etc.
+
+JS files in `/frontend` import other modules in the core app with the `core-app/` prefix which is an alias pointing to `<core-app-root>/frontend/src/app` defined in the `tsconfig.base.json` file, be careful to update import path when configurations change. You will get error outputs from your angular CLI however.
 
 ### Rails generators
 
@@ -97,13 +120,10 @@ For instance this is how you could **generate a model**:
 $ bundle exec rails generate model Kitten name:string --no-test-framework
       invoke  active_record
       create    db/migrate/20170116125942_create_kittens.rb
-      create    app/models/application_record.rb
       create    app/models/kitten.rb
 ```
 
-As you can see a file `application_record.rb` is generated, too. This is new and came with Rails 5. The core should define this class itself. However, it doesn't yet which is an oversight. Once that is fixed you can delete that file. For the time being though you can leave it.
-
-Finally, don't forget to run the migration from the core directory:
+Finally, don't forget to run the migration from the core directory. Please note that you cannot run `db:migrate` or other commands with rails from the engine. You'll have to execute those from the core.
 
 ```
 $ cd $OPENPROJECT_ROOT
@@ -126,6 +146,8 @@ Make sure that the application is running (`bundle exec rails s`) and go to `htt
 
 Great, we're on our way.
 
+
+
 ### Specs
 
 The relevant files for the specs are:
@@ -139,11 +161,7 @@ $ cd $OPENPROJECT_ROOT
 $ RAILS_ENV=test bundle exec rspec `bundle show openproject-proto_plugin`/spec/controllers/kittens_controller_spec.rb
 ```
 
-**Travis CI**
 
-A special `.travis.yml` and `Gemfile.plugins` are included which allow you to have Travis run
-the specs for your plugin along with the core specs. This is a good way to test if your plugin
-works properly in conjunction with the core.
 
 ## Seeders
 
@@ -163,6 +181,8 @@ The plugin defines a `KittenSeeder` which creates a few example rows to be displ
 A plugin's seeders have to be defined under its namespace within the `BasicData` module, for instance `BasicData::ProtoPlugin::KittensSeeder`.
 They will be discovered and invoked by the core automatically.
 
+
+
 ## Models
 
 The relevant files for the models are:
@@ -178,6 +198,8 @@ class Kitten < ApplicationRecord
   validates :name, uniqueness: true, length: { minimum: 5 }
 end
 ```
+
+
 
 ## Controllers
 
@@ -212,6 +234,8 @@ class KittensController < ApplicationController
 end
 ```
 
+
+
 ## Create kitten example
 
 As a simple example, let's enable the create kitten button on the kittens homepage block so that it brings the user to a create kitten page. It's already linked to `new_kitten_path` so all we need to do now with the controller already in place is to create `views/kittens/new.html.erb` template:
@@ -243,12 +267,26 @@ which should end up looking something like this.
 
 We leave it up as an exercise for the reader to complete the CRUD with edit and delete actions. Good luck!
 
-## Assets
+
+
+## I18n
+
+OpenProject uses Rails I18n helpers as well as `I18n-js` to provide translations for the backend and frontend.
+
+You can add your strings to `config/locales/en.yml` and `config/locales/js-en.yml` for backend and frontend translations, respectively.
+
+The translations can then be called with:
+
+- `I18n.t('your_namespace.your_key')` and
+- `I18n.t('js.your_js_translation_key')`
+
+
+
+## Static assets
 
 The relevant files for the assets are:
 
 * `lib/open_project/proto_plugin/engine.rb` - assets statement at the end of the engine.
-* `lib/open_project/proto_plugin/hooks.rb` - the JavaScript and Stylesheet are included here.
 * `app/assets/javascripts/proto_plugin/main.js` - main entry point for plain JavaScript and document ready hook.
 * `app/assets/stylesheets/proto_plugin/main.scss` - good ol' Sass stuff.
 * `app/assets/images/kitty.png` - a nice kitty image.
@@ -256,11 +294,12 @@ The relevant files for the assets are:
 Any additional assets you want to use have to be registered for pre-compilation in the engine like this:
 
 ```
-assets %w(proto_plugin/main.css proto_plugin/main.js kitty.png)
+assets %w(kitty.png)
 ```
 
 You don't technically have to put the assets into a subfolder with the same name as your plugin. But it's highly recommended to do so in order to avoid naming conflicts. For example, if the image `kitty.png` is not scoped, it might conflict with the core if it were also to include another asset named `kitty.png` too.
 
+Please note that OpenProject no longer uses the Rails asset pipeline for JavaScript and CSS. While you could still serve both through the asset pipeline, they are not being transformed anymore (SCSS to CSS, JS minification, etc.). For those, use the Angular frontend module instead.
 
 ## Angular frontend
 
@@ -280,6 +319,22 @@ $ npm run serve
 
 This will compile and output all changes on the fly as you change it using the Angular CLI.
 
+### Global SASS styles
+
+With the Angular frontend, you have the option to generate component-based styles (for example, `kitten.component.sass`) which will be available only within that component using Angular style isolation.
+
+If you want to define global styles or override core styles, you can create or extend the file `frontend/module/global_styles.scss` for styles that will be applied locally.
+
+
+
+### Reloading the application in development
+
+For the backend part, Rails will autoload and reload dependencies in all `app/` folders. If you change something in your plugin under `lib/` , especially changes to the engine.rb, menu system, or plugin registration, you will probably have to restart your Rails server.
+
+For the frontend part, automatic reloading is automatically active when you run `npm run serve` using a file watcher. If you don't see changes in your files resulting in a new compilation cycle, please ensure you're working within the linked core, as that will ensure that the symlink is modified.
+
+
+
 ## Menu Items
 
 The relevant files for the menu items are:
@@ -289,20 +344,21 @@ The relevant files for the menu items are:
 
 Registering new user-defined menu items is easy. For instance, let's assume that you want to add a new item to the project menu. Just add the following to the `engine.rb` file:
 
-```
-menu :project_menu,
-     :kittens,
-     { controller: '/kittens', action: 'index' },
-     after: :overview,
-     param: :project_id,
-     caption: "Kittens",
-     icon: 'icon2 icon-bug',
-     html: { id: "kittens-menu-item" },
-     if: ->(project) { true }
-end
+```ruby
+menu :project_menu, # Which menu to add an item to (compare the core config/initializers/menus.rb for options)
+     :kittens, # The name of the new item to add
+     { controller: '/kittens', action: 'index' }, # The Rails route definition or path to define
+     after: :overview, # use before: or after: to move the menu item next to an existing definition
+     param: :project_id, # Leave it at :project_id if you're adding a project menu item
+     caption: :"proto_plugin_name", # The caption, use a symbol for I18n lookup, or a string for plain text
+     icon: 'icon2 icon-bug', # The icon classes to add, see http://localhost:3000/styleguide for options
+     html: { id: "kittens-menu-item" }, # Additional Rails tag_helper html to add
+     if: ->(project) { true } # A condition, such as permissions when to show the menu
 ```
 
 You are then free to enable the "Kittens module" for a given project by going to that "Project settings" page, for example `/projects/demo-project/settings/modules` and checking the checkbox.
+
+
 
 ![](images/enable-kittens-module.png?raw=true)
 
