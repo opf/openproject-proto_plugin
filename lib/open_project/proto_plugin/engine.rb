@@ -49,11 +49,11 @@ module OpenProject::ProtoPlugin
            caption: "Kittens Frontend"
     end
 
-    initializer 'proto_plugin.register_hooks' do
-      require 'open_project/proto_plugin/hooks'
+    config.to_prepare do
+      ::OpenProject::ProtoPlugin::Hooks
     end
 
-    initializer 'proto_plugin.homescreen_blocks' do
+    config.after_initialize do
       OpenProject::Static::Homescreen.manage :blocks do |blocks|
         blocks.push(
           { partial: 'homescreen_block', if: Proc.new { true } }
@@ -61,7 +61,7 @@ module OpenProject::ProtoPlugin
       end
     end
 
-    initializer 'proto_plugin.notifications' do
+    config.after_initialize do
       OpenProject::Notifications.subscribe 'user_invited' do |token|
         user = token.user
 
