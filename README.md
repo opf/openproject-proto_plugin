@@ -525,7 +525,7 @@ _Note: context variables placed within (parenthesis)_
 
 * :controller_account_success_authentication_after (user)
 * :controller_custom_fields_new_after_save (custom_field)
-* :controller_custom_fields_new_after_save (custom_field)
+* :controller_custom_fields_edit_after_save (custom_field)
 * :controller_messages_new_after_save (params, message)
 * :controller_messages_reply_after_save (params, message)
 * :controller_timelog_available_criterias (available_criterias, project)
