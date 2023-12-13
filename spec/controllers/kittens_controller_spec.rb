@@ -30,7 +30,7 @@
 
 require 'spec_helper'
 
-describe KittensController, type: :controller do
+RSpec.describe KittensController, type: :controller do
   let(:user) { FactoryBot.create :admin }
   let(:project) { FactoryBot.create :project }
 
