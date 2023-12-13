@@ -39,8 +39,7 @@ describe 'Project kittens', type: :feature, js: true do
   let(:project) { FactoryBot.create :project, enabled_module_names: %w[kittens_module] }
   let(:user) do
     FactoryBot.create :user,
-                      member_in_project: project,
-                      member_with_permissions: permissions
+                      member_with_permissions: { project => permissions }
   end
 
   before do

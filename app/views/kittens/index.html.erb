@@ -2,7 +2,7 @@
 
 
 <%= toolbar(title: t(:label_kittens)) do %>
-  <% if current_user.allowed_to?(:manage_kittens, @project, global: @project.nil?) %>
+  <% if (@project.present? && current_user.allowed_in_project?(:manage_kittens, @project)) || (@project.nil? && current_user.allowed_in_any_project?(:manage_kittens)) %>
     <li class="toolbar-item">
       <%= link_to(new_kitten_plugin_project_kitten_path, class: 'button') do %>
         <span class="button--text"><%= t(:label_kitten_new) %></span>
