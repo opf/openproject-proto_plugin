@@ -34,13 +34,12 @@ require 'spec_helper'
 # js:true will enable a JS-compatible browser (Chrome by default)
 #
 # Testing is done with Capybara and Selenium
-describe 'Project kittens', type: :feature, js: true do
+RSpec.describe 'Project kittens', type: :feature, js: true do
   let(:permissions) { %w[view_kittens manage_kittens] }
   let(:project) { FactoryBot.create :project, enabled_module_names: %w[kittens_module] }
   let(:user) do
     FactoryBot.create :user,
-                      member_in_project: project,
-                      member_with_permissions: permissions
+                      member_with_permissions: { project => permissions }
   end
 
   before do

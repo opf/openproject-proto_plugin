@@ -12,7 +12,7 @@ module OpenProject::ProtoPlugin
     register(
       'openproject-proto_plugin',
       :author_url => 'https://openproject.org',
-      :requires_openproject => '>= 6.0.0'
+      :requires_openproject => '>= 13.1.0'
     ) do
       # We define a new project module here for our controller including a permission.
       # The permission is necessary for us to be able to add menu items to the project
@@ -23,12 +23,18 @@ module OpenProject::ProtoPlugin
       # settings before you can see the menu entry.
       project_module :kittens_module do
         permission :view_kittens,
-                   kittens: %i[index],
-                   angular_kittens: %i[show]
+                   {
+                      kittens: %i[index],
+                      angular_kittens: %i[show]
+                   },
+                   permissible_on: [:project]
 
         permission :manage_kittens,
-                   kittens: %i[new create edit destroy],
-                   angular_kittens: %i[show]
+                   {
+                      kittens: %i[new create edit destroy],
+                      angular_kittens: %i[show]
+                   },
+                   permissible_on: [:project]
       end
 
       menu :project_menu,
