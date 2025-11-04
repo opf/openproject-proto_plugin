@@ -8,6 +8,7 @@ import { I18nService } from 'core-app/core/i18n/i18n.service';
   templateUrl: './kitten-page.component.html',
   styleUrls: ['./kitten-page.component.sass'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class KittenPageComponent{
 

@@ -3,24 +3,9 @@
  * We recommend to use angular pages / components instead
  */
 
-import * as jQuery from 'jquery';
+import { OpenProjectStimulusApplication } from 'core-stimulus/openproject-stimulus-application';
 
-(function($) {
-  $(document).ready(function() {
-
-    // OpenProject logo gets thick red border on mouse hover.
-    $("#logo").hover(
-      function enter() {
-        $(this).attr("style", "border: 3px solid red;");
-      },
-      function leave() {
-        $(this).removeAttr("style");
-      }
-    );
-
-    // Widget box emphasized by giving it a nice red border.
-    $('#proto-plugin-block').parent().addClass('proto-plugin-widget-box');
-
-    console.log(I18n.t('js.proto_plugin_name') + ' OK');
-  });
-})(jQuery);
+OpenProjectStimulusApplication.preregisterDynamic(
+  'plugin-kitten',
+  () => import('./stimulus/kitten.controller')
+);

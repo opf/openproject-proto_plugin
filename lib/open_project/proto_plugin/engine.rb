@@ -24,15 +24,15 @@ module OpenProject::ProtoPlugin
       project_module :kittens_module do
         permission :view_kittens,
                    {
-                      kittens: %i[index],
-                      angular_kittens: %i[show]
+                     kittens: %i[index],
+                     angular_kittens: %i[show]
                    },
                    permissible_on: [:project]
 
         permission :manage_kittens,
                    {
-                      kittens: %i[new create edit destroy],
-                      angular_kittens: %i[show]
+                     kittens: %i[new create edit destroy],
+                     angular_kittens: %i[show]
                    },
                    permissible_on: [:project]
       end
@@ -62,7 +62,10 @@ module OpenProject::ProtoPlugin
     config.after_initialize do
       OpenProject::Static::Homescreen.manage :blocks do |blocks|
         blocks.push(
-          { partial: 'homescreen_block', if: Proc.new { true } }
+          {
+            name: :kittens,
+            if: Proc.new { true }
+          }
         )
       end
     end

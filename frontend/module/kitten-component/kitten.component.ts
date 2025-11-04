@@ -11,6 +11,7 @@ import {
   templateUrl: './kitten.component.html',
   styleUrls: ['./kitten.component.sass'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class KittenComponent implements OnInit {
 
