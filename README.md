@@ -9,9 +9,9 @@ To get started quickly you may just copy this plugin, remove the bits you don't 
 
 In order to be able to continue, you will first have to have a working OpenProject core development environment. Please follow these guides to set that up:
 
-* [Development environment Ubuntu/Debian](https://www.openproject.org/docs/development/development-environment-ubuntu/)
-* [Development environment Mac OS X](https://www.openproject.org/docs/development/development-environment-osx/)
-* [Development environment Docker](https://www.openproject.org/docs/development/development-environment-docker/)
+* [Development environment Ubuntu/Debian](https://www.openproject.org/docs/development/development-environment/linux/)
+* [Development environment Mac OS X](https://www.openproject.org/docs/development/development-environment/macos/)
+* [Development environment Docker](https://www.openproject.org/docs/development/development-environment/docker)
 
 We are assuming that you understand how to develop Ruby on Rails applications and are familiar with controllers, views, asset management, hooks and engines.
 
