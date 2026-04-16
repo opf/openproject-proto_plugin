@@ -1,14 +1,34 @@
 <% html_title t(:label_kittens) %>
 
+<% breadcrumb_items =
+     if @project
+       [{ href: project_overview_path(@project), text: @project.name }, t(:label_kittens)]
+     else
+       [t(:label_kittens)]
+     end
+%>
 
-<%= toolbar(title: t(:label_kittens)) do %>
-  <% if (@project.present? && current_user.allowed_in_project?(:manage_kittens, @project)) || (@project.nil? && current_user.allowed_in_any_project?(:manage_kittens)) %>
-    <li class="toolbar-item">
-      <%= link_to(new_kitten_plugin_project_kitten_path, class: 'button') do %>
-        <span class="button--text"><%= t(:label_kitten_new) %></span>
-      <% end %>
-    </li>
-  <% end %>
+<%=
+  render(Primer::OpenProject::PageHeader.new) do |header|
+    header.with_title { t(:label_kittens) }
+    header.with_breadcrumbs(breadcrumb_items)
+  end
+%>
+
+<% if @project.present? && current_user.allowed_in_project?(:manage_kittens, @project) %>
+  <%=
+    render(Primer::OpenProject::SubHeader.new) do |subheader|
+      subheader.with_action_button(
+        scheme: :primary,
+        leading_icon: :plus,
+        label: t(:label_kitten_new),
+        tag: :a,
+        href: new_kitten_plugin_project_kitten_path(project_id: @project)
+      ) do
+        t(:label_kitten_new)
+      end
+    end
+  %>
 <% end %>
 
 
